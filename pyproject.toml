@@ -1,0 +1,50 @@
+[project]
+name = "maid-validator-csharp"
+version = "0.1.0"
+description = "C# (.cs) language validator plugin for MAID Runner, backed by tree-sitter-c-sharp."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    {name = "Mamerto Fabian Jr.", email = "mamerto@codefrost.com"}
+]
+keywords = ["maid", "maid-runner", "csharp", "validator", "tree-sitter", "plugin"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C#",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "maid-runner>=2,<3",
+    "tree-sitter>=0.23.2",
+    "tree-sitter-c-sharp>=0.23.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/mamertofabian/maid-validator-csharp"
+Repository = "https://github.com/mamertofabian/maid-validator-csharp"
+
+[project.entry-points."maid_runner.validators"]
+csharp = "maid_validator_csharp:CSharpValidator"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "black>=25.1.0",
+    "ruff>=0.13.0",
+]
+
+[build-system]
+requires = ["setuptools>=77.0.3", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["maid_validator_csharp*"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::pytest.PytestCollectionWarning",
+]
