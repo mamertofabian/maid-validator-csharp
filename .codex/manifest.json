@@ -1,0 +1,38 @@
+{
+  "skills": {
+    "distributable": [
+      "maid-planner",
+      "maid-plan-review",
+      "maid-implementer",
+      "maid-implementation-review",
+      "maid-auditor",
+      "maid-outcome-enrich",
+      "maid-run-review"
+    ],
+    "descriptions": {
+      "maid-planner": "Plan MAID changes with manifest-derived Outcome recall",
+      "maid-plan-review": "Review a MAID manifest and behavioral tests before implementation",
+      "maid-implementer": "Implement approved MAID manifests with Outcome recall context",
+      "maid-implementation-review": "Review MAID implementations and Outcome record needs",
+      "maid-auditor": "Audit MAID contracts with advisory Outcome insights cadence",
+      "maid-outcome-enrich": "Generate advisory Outcome enrichment outside maid-runner",
+      "maid-run-review": "Generate advisory MAID run reviews outside maid-runner"
+    }
+  },
+  "skill_agents": {
+    "distributable": [
+      "maid-planner/agents/openai.yaml",
+      "maid-plan-review/agents/openai.yaml",
+      "maid-implementer/agents/openai.yaml",
+      "maid-implementation-review/agents/openai.yaml",
+      "maid-auditor/agents/openai.yaml",
+      "maid-outcome-enrich/agents/openai.yaml",
+      "maid-run-review/agents/openai.yaml"
+    ],
+    "descriptions": {}
+  },
+  "metadata": {
+    "maid_runner_version": "2.22.0",
+    "instruction_payload_version": "2026.07.18.1"
+  }
+}

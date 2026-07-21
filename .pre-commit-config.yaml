@@ -1,0 +1,12 @@
+repos:
+# BEGIN MAID RUNNER PRE-COMMIT
+  - repo: local
+    hooks:
+      - id: maid-verify
+        name: MAID verification (fail-fast handoff gates)
+        entry: maid verify --summary --advisory --require-plan-lock --require-red-evidence --fail-fast --no-changed-scope --file-tracking-scope task --plan-lock-scope task --since HEAD
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit]
+# END MAID RUNNER PRE-COMMIT
