@@ -27,9 +27,14 @@ There is **no `make`** here; these three commands are the gate:
 When changing collectors, inspect the tree-sitter-c-sharp node/field names
 against real C# **before** coding — the grammar is the source of truth
 (construct → `ArtifactKind` mapping and visibility rules live in
-`_implementation.py`). maid-runner is a dependency (`>=2,<3`); the venv uses the
-published release, so contract changes needing unreleased maid-runner fixes
-require publishing maid-runner first.
+`_implementation.py`).
+
+**maid-runner dependency:** the published constraint is `maid-runner>=2,<3`
+(`[project.dependencies]`), which is what the released wheel depends on. During
+development, `[tool.uv.sources]` overrides this to the local editable checkout
+(`../maid-runner`), so the dev env can rely on **unreleased** maid-runner. Before
+cutting a release, remove that `[tool.uv.sources]` override and relock so the
+package resolves the published maid-runner.
 
 <!-- BEGIN MAID RUNNER -->
 ## MAID Runner

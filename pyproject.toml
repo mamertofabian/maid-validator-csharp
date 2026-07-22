@@ -36,6 +36,15 @@ dev = [
     "ruff>=0.13.0",
 ]
 
+# Development-only source override: build the plugin against the local,
+# unreleased maid-runner checkout while the plugin is being developed. This
+# does NOT affect the published wheel — its dependency metadata still comes
+# from [project.dependencies] ("maid-runner>=2,<3"). Remove this section (and
+# relock) when cutting a release so the package resolves the published
+# maid-runner.
+[tool.uv.sources]
+maid-runner = { path = "../maid-runner", editable = true }
+
 [build-system]
 requires = ["setuptools>=77.0.3", "wheel"]
 build-backend = "setuptools.build_meta"
