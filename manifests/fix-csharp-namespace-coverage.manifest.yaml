@@ -1,0 +1,84 @@
+# draft-kind: implementation
+schema: "2"
+goal: Collect C# namespace references from ordinary using directives so required
+  namespace declarations can satisfy E200 without weakening coverage for
+  contained types.
+type: fix
+created: "2026-07-22T14:26:22Z"
+description: |
+  Treat a non-static C# using directive as a syntax-local reference to its imported
+  namespace. This closes the implementation/behavioral validation deadlock where the
+  implementation collector requires a public namespace declaration but the behavioral
+  collector cannot currently emit a matching namespace identity. Namespace imports are
+  structural coverage only; classes, interfaces, methods, and attributes inside the
+  namespace remain independently subject to E200 behavioral coverage.
+temptations:
+  - risk: "Do not exempt every namespace artifact from E200 in maid-runner core."
+    instead: "Emit an exact namespace FoundArtifact from the C# syntax that imports
+      it."
+  - risk: "Do not treat using static TypeName as namespace coverage."
+    instead: "Collect only ordinary namespace using directives and preserve static/type
+      semantics for later dedicated work."
+  - risk: "Do not assume a using alias target is a namespace because C# aliases may target types."
+    instead: "Exclude alias directives containing '=' unless semantic namespace/type resolution is added in a dedicated contract."
+  - risk: "Do not infer namespace coverage from string literals or unrelated qualified
+      names."
+    instead: "Read the qualified name directly from a parsed using_directive node."
+files:
+  create:
+    - path: tests/test_namespace_behavioral.py
+      artifacts:
+        - kind: test_function
+          name: test_using_directive_collects_exact_namespace_reference
+        - kind: test_function
+          name: test_static_using_does_not_claim_namespace_coverage
+        - kind: test_function
+          name: test_type_alias_using_does_not_claim_namespace_coverage
+        - kind: test_function
+          name: test_namespace_and_contained_class_satisfy_end_to_end_validation
+  read:
+    - src/maid_validator_csharp/validator.py
+    - src/maid_validator_csharp/_implementation.py
+    - manifests/csharp-validator-plugin.manifest.yaml
+    - manifests/fix-csharp-behavioral-identity.manifest.yaml
+  scope:
+    - path: src/maid_validator_csharp/_behavioral.py
+      reason: Add syntax-local collection of namespace identities from ordinary
+        C# using directives without changing the collector's public signature.
+validate:
+  - [uv, run, pytest, tests/test_namespace_behavioral.py, -q]
+outcome:
+  status: completed
+  completed_at: "2026-07-22T14:29:56Z"
+  summary: Ordinary C# namespace using directives now emit exact namespace references, closing the E200 deadlock while static and alias directives remain excluded.
+  rationale: Namespace declarations are structural public artifacts required by implementation collection. Using the parsed ordinary import is the narrowest syntax-local evidence available, while excluding static and alias forms prevents type syntax from falsely satisfying namespace coverage.
+  lessons:
+    - lesson_type: design
+      summary: C# using directives share one syntax node across namespace, static, and alias forms, so behavioral namespace evidence must explicitly reject forms that may target types.
+      tags: [csharp, namespace, behavioral-coverage, e200]
+      paths:
+        - src/maid_validator_csharp/_behavioral.py
+        - tests/test_namespace_behavioral.py
+  review_notes:
+    - source: independent-review-round-1
+      severity: needs-changes
+      summary: Found that alias directives may target types and could falsely emit namespace coverage; an alias-negative regression and exclusion were added through plan revision 4.
+    - source: independent-review-round-2
+      severity: ready
+      summary: Confirmed ordinary and global ordinary imports emit exact namespace identities, static and alias forms remain excluded, and no blocking findings remain.
+  validation:
+    - command: [uv, run, pytest, -q]
+      status: passed
+      summary: All 58 plugin tests passed.
+    - command: [uv, run, ruff, check, src/, tests/]
+      status: passed
+      summary: Lint passed.
+    - command: [uv, run, black, --check, src/, tests/]
+      status: passed
+      summary: Formatting check passed.
+    - command: [uv, run, maid, verify, --summary, --require-plan-lock, --require-red-evidence, --since, HEAD]
+      status: passed
+      summary: All nine strict verification stages passed with revision-4 red evidence.
+    - command: [maid, validate, manifests/harden-volunteerdesk-induction-workflow.manifest.yaml, --mode, implementation, --no-chain]
+      status: passed
+      summary: The original Deckhand bug-report reproduction passed from the Deckhand repository.

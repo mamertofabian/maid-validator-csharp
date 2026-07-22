@@ -1,0 +1,168 @@
+{
+  "manifest_path": "manifests/fix-csharp-namespace-coverage.manifest.yaml",
+  "manifest_hash": "sha256-contract:1f71da4465a1fbf7e050fbf1ca080fd7ff71f5f0c3f92797fb56894740854a5d",
+  "test_hashes": {
+    "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+  },
+  "created_at": "2026-07-22T14:26:21.726282+00:00",
+  "revision": 5,
+  "revisions": [
+    {
+      "prior_manifest_hash": "sha256-contract:4c07c9f745319a90ae9caf558da5e50117648c8555b1acd8338ed2c923a913cd",
+      "prior_test_hashes": {
+        "tests/test_namespace_behavioral.py": "sha256-pyast:e96d435300473e8cc8a1d3ee3b5c8c9fe2f83f81427cf50d1131dfd8b688d043"
+      },
+      "revised_at": "2026-07-22T14:26:22.177950+00:00",
+      "reason": "Migrated by maid manifest promote: manifests/drafts/fix-csharp-namespace-coverage.manifest.yaml -> manifests/fix-csharp-namespace-coverage.manifest.yaml",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:844cc7fe4c22088764c27f16ddce9e8247cd57fc7bf248121022af5b8fed9150",
+      "prior_test_hashes": {
+        "tests/test_namespace_behavioral.py": "sha256-pyast:e96d435300473e8cc8a1d3ee3b5c8c9fe2f83f81427cf50d1131dfd8b688d043"
+      },
+      "revised_at": "2026-07-22T14:28:15.064825+00:00",
+      "reason": "Independent review found alias using directives may target types and must not emit namespace coverage",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:844cc7fe4c22088764c27f16ddce9e8247cd57fc7bf248121022af5b8fed9150",
+      "prior_test_hashes": {
+        "tests/test_namespace_behavioral.py": "sha256-pyast:e96d435300473e8cc8a1d3ee3b5c8c9fe2f83f81427cf50d1131dfd8b688d043"
+      },
+      "revised_at": "2026-07-22T14:28:48.721663+00:00",
+      "reason": "Add alias-to-type negative coverage required by independent implementation review",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [
+          "tests/test_namespace_behavioral.py:test_type_alias_using_does_not_claim_namespace_coverage",
+          "tests/test_namespace_behavioral.py:test_type_alias_using_does_not_claim_namespace_coverage:kind=test_function"
+        ],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:1f71da4465a1fbf7e050fbf1ca080fd7ff71f5f0c3f92797fb56894740854a5d",
+      "prior_test_hashes": {
+        "tests/test_namespace_behavioral.py": "sha256-pyast:9abddcca46ab959d7c4f6586658ebee11a28a1333ed26eeb797243ec30412428"
+      },
+      "revised_at": "2026-07-22T14:32:05.350699+00:00",
+      "reason": "Align behavioral test hash with repository pre-commit MAID environment",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    }
+  ],
+  "red_evidence": {
+    "red": true,
+    "captured_at": "2026-07-22T14:28:48.944396+00:00",
+    "commands": [
+      {
+        "command": "uv run pytest tests/test_namespace_behavioral.py -q",
+        "exit_code": 1,
+        "output_tail": "            \"  [Fact] public void CreatesWidget() { var widget = new Widget(); }\\n\"\n            \"}\\n\"\n        )\n    \n        result = ValidationEngine(project_root=tmp_path).validate(\n            manifest_path,\n            mode=ValidationMode.IMPLEMENTATION,\n        )\n    \n>       assert not any(\n            error.code == ErrorCode.ARTIFACT_NOT_USED_IN_TESTS for error in result.errors\n        )\nE       assert not True\nE        +  where True = any(<generator object test_namespace_and_contained_class_satisfy_end_to_end_validation.<locals>.<genexpr> at 0x73905f8dbed0>)\n\ntests/test_namespace_behavioral.py:87: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_namespace_behavioral.py::test_using_directive_collects_exact_namespace_reference\nFAILED tests/test_namespace_behavioral.py::test_namespace_and_contained_class_satisfy_end_to_end_validation\n2 failed, 2 passed in 0.10s",
+        "classification": "red"
+      }
+    ]
+  },
+  "legacy_baseline": null,
+  "agent": null,
+  "_manifest_contract": {
+    "artifacts": [
+      "tests/test_namespace_behavioral.py:test_namespace_and_contained_class_satisfy_end_to_end_validation",
+      "tests/test_namespace_behavioral.py:test_namespace_and_contained_class_satisfy_end_to_end_validation:kind=test_function",
+      "tests/test_namespace_behavioral.py:test_static_using_does_not_claim_namespace_coverage",
+      "tests/test_namespace_behavioral.py:test_static_using_does_not_claim_namespace_coverage:kind=test_function",
+      "tests/test_namespace_behavioral.py:test_type_alias_using_does_not_claim_namespace_coverage",
+      "tests/test_namespace_behavioral.py:test_type_alias_using_does_not_claim_namespace_coverage:kind=test_function",
+      "tests/test_namespace_behavioral.py:test_using_directive_collects_exact_namespace_reference",
+      "tests/test_namespace_behavioral.py:test_using_directive_collects_exact_namespace_reference:kind=test_function"
+    ],
+    "files": {
+      "create": [
+        "tests/test_namespace_behavioral.py"
+      ],
+      "edit": [],
+      "read": [
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "manifests/fix-csharp-behavioral-identity.manifest.yaml",
+        "src/maid_validator_csharp/_implementation.py",
+        "src/maid_validator_csharp/validator.py"
+      ],
+      "scope": [
+        "src/maid_validator_csharp/_behavioral.py"
+      ],
+      "delete": [],
+      "snapshot": []
+    },
+    "file_contract": {
+      "create": [
+        {
+          "path": "tests/test_namespace_behavioral.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_using_directive_collects_exact_namespace_reference"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_static_using_does_not_claim_namespace_coverage"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_type_alias_using_does_not_claim_namespace_coverage"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_namespace_and_contained_class_satisfy_end_to_end_validation"
+            }
+          ]
+        }
+      ],
+      "read": [
+        "src/maid_validator_csharp/validator.py",
+        "src/maid_validator_csharp/_implementation.py",
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "manifests/fix-csharp-behavioral-identity.manifest.yaml"
+      ],
+      "scope": [
+        {
+          "path": "src/maid_validator_csharp/_behavioral.py",
+          "reason": "Add syntax-local collection of namespace identities from ordinary C# using directives without changing the collector's public signature."
+        }
+      ]
+    },
+    "test_files": [
+      "tests/test_namespace_behavioral.py"
+    ],
+    "validate_commands": [
+      "uv run pytest tests/test_namespace_behavioral.py -q"
+    ]
+  }
+}

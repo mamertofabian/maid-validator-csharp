@@ -41,6 +41,8 @@ def collect_behavioral_artifacts(root: Any, source: bytes) -> list[FoundArtifact
                     line=_line(node),
                 )
             )
+        elif node_type == "using_directive":
+            _collect_namespace_reference(node, source, artifacts)
         elif node_type == "object_creation_expression":
             name = _base_type_name(_field(node, "type"), source)
             if name:
@@ -60,6 +62,26 @@ def collect_behavioral_artifacts(root: Any, source: bytes) -> list[FoundArtifact
         stack.extend(reversed(node.children))
 
     return artifacts
+
+
+def _collect_namespace_reference(
+    node: Any, source: bytes, artifacts: list[FoundArtifact]
+) -> None:
+    if any(child.type in {"static", "="} for child in node.children):
+        return
+    target = next(
+        (child for child in reversed(node.children) if child.is_named),
+        None,
+    )
+    if target is None:
+        return
+    artifacts.append(
+        FoundArtifact(
+            kind=ArtifactKind.NAMESPACE,
+            name=_text(target, source),
+            line=_line(node),
+        )
+    )
 
 
 def _collect_invocation(
