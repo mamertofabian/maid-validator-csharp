@@ -1,0 +1,256 @@
+{
+  "manifest_path": "manifests/csharp-validator-plugin.manifest.yaml",
+  "manifest_hash": "sha256-contract:92fe33ba357e9876502572c6d95404ad07fec72f5804eda98f5f9bdbfd79bb85",
+  "test_hashes": {
+    "tests/test_behavioral.py": "sha256:0704bdc9852ac5e2533a3e3ea1b2587f1deb5c25fcb331631b875a065929bf76",
+    "tests/test_implementation.py": "sha256:4ace8efe5548497bed568656917a8d66dcad3020995811114c8679262e7ddb26",
+    "tests/test_internals.py": "sha256:81b664e83436891e1ae48a8b8ccb6586221213cd06064242c40b15c6731324cd"
+  },
+  "created_at": "2026-07-22T00:08:46.390967+00:00",
+  "revision": 1,
+  "revisions": [],
+  "red_evidence": {
+    "red": true,
+    "captured_at": "2026-07-22T00:08:46.674945+00:00",
+    "commands": [
+      {
+        "command": "uv run pytest tests/ -q",
+        "exit_code": 1,
+        "output_tail": "FAILED tests/test_conformance.py::TestCSharpValidatorConformance::test_declared_artifact_identity_fields_are_exact[function]\nFAILED tests/test_conformance.py::TestCSharpValidatorConformance::test_declared_artifact_identity_fields_are_exact[method]\nFAILED tests/test_conformance.py::TestCSharpValidatorConformance::test_declared_artifact_identity_fields_are_exact[attribute]\nFAILED tests/test_conformance.py::TestCSharpValidatorConformance::test_private_artifacts_stay_private_and_out_of_snapshot\nFAILED tests/test_conformance.py::TestCSharpValidatorConformance::test_behavioral_sample_references_declared_target\nFAILED tests/test_conformance.py::TestCSharpValidatorConformance::test_unparseable_source_reports_errors_without_artifacts\nFAILED tests/test_implementation.py::test_block_namespace_is_collected_as_namespace\nFAILED tests/test_implementation.py::test_file_scoped_namespace_is_collected\nFAILED tests/test_implementation.py::test_interface_and_its_methods_are_collected\nFAILED tests/test_implementation.py::test_default_and_nullable_parameters_are_captured\nFAILED tests/test_implementation.py::test_class_base_list_becomes_bases - ass...\nFAILED tests/test_implementation.py::test_private_and_internal_members_are_dropped\nFAILED tests/test_implementation.py::test_public_property_and_field_become_attributes\nFAILED tests/test_implementation.py::test_enum_struct_record_delegate_kinds\nFAILED tests/test_implementation.py::test_generic_method_records_type_parameters\nFAILED tests/test_implementation.py::test_async_method_is_flagged_async - ass...\nFAILED tests/test_implementation.py::test_top_level_local_function_is_function\nFAILED tests/test_implementation.py::test_explicit_interface_implementation_is_public\nFAILED tests/test_implementation.py::test_parse_error_returns_errors_without_artifacts\n29 failed, 16 passed in 0.15s",
+        "classification": "red"
+      }
+    ]
+  },
+  "legacy_baseline": null,
+  "agent": null,
+  "_manifest_contract": {
+    "artifacts": [
+      "src/maid_validator_csharp/__init__.py:class:CSharpValidator",
+      "src/maid_validator_csharp/__init__.py:class:CSharpValidator:kind=class",
+      "src/maid_validator_csharp/_behavioral.py:function:collect_behavioral_artifacts",
+      "src/maid_validator_csharp/_behavioral.py:function:collect_behavioral_artifacts:arg=root:type=Any:default=None",
+      "src/maid_validator_csharp/_behavioral.py:function:collect_behavioral_artifacts:arg=source:type=bytes:default=None",
+      "src/maid_validator_csharp/_behavioral.py:function:collect_behavioral_artifacts:kind=function",
+      "src/maid_validator_csharp/_behavioral.py:function:collect_behavioral_artifacts:returns=list[FoundArtifact]",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:arg=root:type=Any:default=None",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:arg=source:type=bytes:default=None",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:kind=function",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:returns=list[FoundArtifact]",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.parse_errors",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.parse_errors:kind=attribute",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.parse_errors:of=CSharpParseSession",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.source_bytes",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.source_bytes:kind=attribute",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.source_bytes:of=CSharpParseSession",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.tree",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.tree:kind=attribute",
+      "src/maid_validator_csharp/_parse.py:attribute:CSharpParseSession.tree:of=CSharpParseSession",
+      "src/maid_validator_csharp/_parse.py:class:CSharpParseSession",
+      "src/maid_validator_csharp/_parse.py:class:CSharpParseSession:kind=class",
+      "src/maid_validator_csharp/_parse.py:function:collect_parse_errors",
+      "src/maid_validator_csharp/_parse.py:function:collect_parse_errors:arg=node:type=Any:default=None",
+      "src/maid_validator_csharp/_parse.py:function:collect_parse_errors:kind=function",
+      "src/maid_validator_csharp/_parse.py:function:collect_parse_errors:returns=list[str]",
+      "src/maid_validator_csharp/_parse.py:function:parse_csharp_source",
+      "src/maid_validator_csharp/_parse.py:function:parse_csharp_source:arg=parser:type=Parser:default=None",
+      "src/maid_validator_csharp/_parse.py:function:parse_csharp_source:arg=source:type=str:default=None",
+      "src/maid_validator_csharp/_parse.py:function:parse_csharp_source:kind=function",
+      "src/maid_validator_csharp/_parse.py:function:parse_csharp_source:returns=CSharpParseSession",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator:base=BaseValidator",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator:kind=class",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_behavioral_artifacts",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_behavioral_artifacts:arg=file_path:type=Union[str, Path]:default=None",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_behavioral_artifacts:arg=source:type=str:default=None",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_behavioral_artifacts:kind=method",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_behavioral_artifacts:of=CSharpValidator",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_behavioral_artifacts:returns=CollectionResult",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_implementation_artifacts",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_implementation_artifacts:arg=file_path:type=Union[str, Path]:default=None",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_implementation_artifacts:arg=source:type=str:default=None",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_implementation_artifacts:kind=method",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_implementation_artifacts:of=CSharpValidator",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.collect_implementation_artifacts:returns=CollectionResult",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.supported_extensions",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.supported_extensions:kind=method",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.supported_extensions:of=CSharpValidator",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.supported_extensions:returns=tuple[str, Ellipsis]"
+    ],
+    "files": {
+      "create": [
+        "src/maid_validator_csharp/__init__.py",
+        "src/maid_validator_csharp/_behavioral.py",
+        "src/maid_validator_csharp/_implementation.py",
+        "src/maid_validator_csharp/_parse.py",
+        "src/maid_validator_csharp/validator.py"
+      ],
+      "edit": [],
+      "read": [],
+      "scope": [],
+      "delete": [],
+      "snapshot": []
+    },
+    "file_contract": {
+      "create": [
+        {
+          "path": "src/maid_validator_csharp/_parse.py",
+          "artifacts": [
+            {
+              "kind": "class",
+              "name": "CSharpParseSession"
+            },
+            {
+              "kind": "attribute",
+              "name": "source_bytes",
+              "of": "CSharpParseSession"
+            },
+            {
+              "kind": "attribute",
+              "name": "tree",
+              "of": "CSharpParseSession"
+            },
+            {
+              "kind": "attribute",
+              "name": "parse_errors",
+              "of": "CSharpParseSession"
+            },
+            {
+              "kind": "function",
+              "name": "parse_csharp_source",
+              "args": [
+                {
+                  "name": "source",
+                  "type": "str"
+                },
+                {
+                  "name": "parser",
+                  "type": "Parser"
+                }
+              ],
+              "returns": "CSharpParseSession"
+            },
+            {
+              "kind": "function",
+              "name": "collect_parse_errors",
+              "args": [
+                {
+                  "name": "node",
+                  "type": "Any"
+                }
+              ],
+              "returns": "list[str]"
+            }
+          ]
+        },
+        {
+          "path": "src/maid_validator_csharp/_implementation.py",
+          "artifacts": [
+            {
+              "kind": "function",
+              "name": "collect_implementation_artifacts",
+              "args": [
+                {
+                  "name": "root",
+                  "type": "Any"
+                },
+                {
+                  "name": "source",
+                  "type": "bytes"
+                }
+              ],
+              "returns": "list[FoundArtifact]"
+            }
+          ]
+        },
+        {
+          "path": "src/maid_validator_csharp/_behavioral.py",
+          "artifacts": [
+            {
+              "kind": "function",
+              "name": "collect_behavioral_artifacts",
+              "args": [
+                {
+                  "name": "root",
+                  "type": "Any"
+                },
+                {
+                  "name": "source",
+                  "type": "bytes"
+                }
+              ],
+              "returns": "list[FoundArtifact]"
+            }
+          ]
+        },
+        {
+          "path": "src/maid_validator_csharp/validator.py",
+          "artifacts": [
+            {
+              "kind": "class",
+              "name": "CSharpValidator",
+              "bases": [
+                "BaseValidator"
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "supported_extensions",
+              "of": "CSharpValidator",
+              "returns": "tuple[str, Ellipsis]"
+            },
+            {
+              "kind": "method",
+              "name": "collect_implementation_artifacts",
+              "of": "CSharpValidator",
+              "args": [
+                {
+                  "name": "source",
+                  "type": "str"
+                },
+                {
+                  "name": "file_path",
+                  "type": "Union[str, Path]"
+                }
+              ],
+              "returns": "CollectionResult"
+            },
+            {
+              "kind": "method",
+              "name": "collect_behavioral_artifacts",
+              "of": "CSharpValidator",
+              "args": [
+                {
+                  "name": "source",
+                  "type": "str"
+                },
+                {
+                  "name": "file_path",
+                  "type": "Union[str, Path]"
+                }
+              ],
+              "returns": "CollectionResult"
+            }
+          ]
+        },
+        {
+          "path": "src/maid_validator_csharp/__init__.py",
+          "artifacts": [
+            {
+              "kind": "class",
+              "name": "CSharpValidator"
+            }
+          ]
+        }
+      ]
+    },
+    "test_files": [
+      "tests/test_behavioral.py",
+      "tests/test_implementation.py",
+      "tests/test_internals.py"
+    ],
+    "validate_commands": [
+      "uv run pytest tests/ -q"
+    ]
+  }
+}

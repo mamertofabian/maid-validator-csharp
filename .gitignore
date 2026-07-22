@@ -7,7 +7,6 @@ dist/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
-.maid/
 
 # BEGIN MAID RUNNER GENERATED FILES
 .maid/outcomes.json

@@ -1,0 +1,141 @@
+schema: '2'
+type: feature
+goal: Build the C# (.cs) validator plugin — CSharpValidator collects implementation and
+  behavioral artifacts from C# source via tree-sitter-c-sharp, registered through the
+  maid_runner.validators entry point.
+files:
+  create:
+  - path: src/maid_validator_csharp/_parse.py
+    artifacts:
+    - kind: class
+      name: CSharpParseSession
+    - kind: attribute
+      name: source_bytes
+      of: CSharpParseSession
+    - kind: attribute
+      name: tree
+      of: CSharpParseSession
+    - kind: attribute
+      name: parse_errors
+      of: CSharpParseSession
+    - kind: function
+      name: parse_csharp_source
+      args:
+      - name: source
+        type: str
+      - name: parser
+        type: Parser
+      returns: CSharpParseSession
+    - kind: function
+      name: collect_parse_errors
+      args:
+      - name: node
+        type: Any
+      returns: list[str]
+  - path: src/maid_validator_csharp/_implementation.py
+    artifacts:
+    - kind: function
+      name: collect_implementation_artifacts
+      args:
+      - name: root
+        type: Any
+      - name: source
+        type: bytes
+      returns: list[FoundArtifact]
+  - path: src/maid_validator_csharp/_behavioral.py
+    artifacts:
+    - kind: function
+      name: collect_behavioral_artifacts
+      args:
+      - name: root
+        type: Any
+      - name: source
+        type: bytes
+      returns: list[FoundArtifact]
+  - path: src/maid_validator_csharp/validator.py
+    artifacts:
+    - kind: class
+      name: CSharpValidator
+      bases:
+      - BaseValidator
+    - kind: method
+      name: supported_extensions
+      of: CSharpValidator
+      returns: tuple[str, Ellipsis]
+    - kind: method
+      name: collect_implementation_artifacts
+      of: CSharpValidator
+      args:
+      - name: source
+        type: str
+      - name: file_path
+        type: Union[str, Path]
+      returns: CollectionResult
+    - kind: method
+      name: collect_behavioral_artifacts
+      of: CSharpValidator
+      args:
+      - name: source
+        type: str
+      - name: file_path
+        type: Union[str, Path]
+      returns: CollectionResult
+  - path: src/maid_validator_csharp/__init__.py
+    artifacts:
+    - kind: class
+      name: CSharpValidator
+validate:
+- - uv
+  - run
+  - pytest
+  - tests/
+  - -q
+created: '2026-07-22T00:05:00Z'
+outcome:
+  status: completed
+  summary: Retroactive MAID feature manifest for the C# validator plugin, locked with
+    genuine red-phase evidence.
+  rationale: The plugin predated MAID adoption. The real red phase was reproduced by
+    stubbing the validator collectors so the behavioral contract failed, captured via
+    maid plan lock, then the implementation was restored. All validation passed green.
+  lessons:
+    - lesson_type: implementation
+      summary: Explicit interface implementations carry no access modifier but are part
+        of the public contract; the collector must treat them as visible, not drop them.
+      tags:
+        - csharp
+        - tree-sitter
+        - visibility
+      paths:
+        - src/maid_validator_csharp/_implementation.py
+        - tests/test_implementation.py
+    - lesson_type: workflow
+      summary: Format test files with black BEFORE maid plan lock; reformatting after
+        locking changes the recorded test hashes and tampers the lock.
+      tags:
+        - maid-workflow
+        - plan-lock
+      paths:
+        - tests/test_internals.py
+  validation:
+    - command:
+        - uv
+        - run
+        - python
+        - -m
+        - pytest
+        - tests/
+        - -q
+      status: passed
+      summary: 45 behavioral and internal unit tests pass green.
+    - command:
+        - uv
+        - run
+        - maid
+        - verify
+        - --summary
+        - --require-plan-lock
+        - --require-red-evidence
+      status: passed
+      summary: All verify gates pass, including plan_lock with recorded red evidence.
+  completed_at: '2026-07-22T00:10:00Z'

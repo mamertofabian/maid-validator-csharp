@@ -310,6 +310,10 @@ def _is_visible_member(node: Any, in_interface: bool) -> bool:
         return False
     if in_interface:
         return True
+    # Explicit interface implementations (e.g. `Task IFoo.Bar()`) carry no
+    # access modifier — C# forbids one — but are part of the public contract.
+    if _first_child_of_type(node, "explicit_interface_specifier") is not None:
+        return True
     return "public" in mods or "protected" in mods
 
 

@@ -194,6 +194,23 @@ def test_top_level_local_function_is_function(validator):
     assert [a.name for a in fn.args] == ["a", "b"]
 
 
+def test_explicit_interface_implementation_is_public(validator):
+    # Explicit interface implementations carry no access modifier (C# forbids
+    # one) but are part of the public contract; they must not be dropped.
+    source = (
+        "public class C : IFoo\n"
+        "{\n"
+        "    Task IFoo.Bar(int x) { return null; }\n"
+        "    public void Ok() { }\n"
+        "}\n"
+    )
+    artifacts = _impl(validator, source)
+    bar = _find(artifacts, "Bar", ArtifactKind.METHOD, of="C")
+    assert bar is not None
+    assert [a.name for a in bar.args] == ["x"]
+    assert bar.returns == "Task"
+
+
 def test_parse_error_returns_errors_without_artifacts(validator):
     result = validator.collect_implementation_artifacts("public class {\n", "bad.cs")
     assert result.artifacts == []
