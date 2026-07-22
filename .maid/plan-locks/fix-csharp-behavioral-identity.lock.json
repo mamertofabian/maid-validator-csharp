@@ -1,0 +1,239 @@
+{
+  "manifest_path": "manifests/fix-csharp-behavioral-identity.manifest.yaml",
+  "manifest_hash": "sha256-contract:518557351b08a8c87d49a55139d71fbe2538879e7160d2020b06c91844e3b605",
+  "test_hashes": {
+    "tests/test_behavioral.py": "sha256-pyast:88ca47f16ffe38b79a48b4c8df2d8d062c999fb27560020da6cb1991be2d2312",
+    "tests/test_behavioral_identity.py": "sha256-pyast:04411752a4b84253d2ac982fa82b5fcbec6e515b9a6a88e84b1ea0ed76371c0e"
+  },
+  "created_at": "2026-07-22T10:21:59.536217+00:00",
+  "revision": 6,
+  "revisions": [
+    {
+      "prior_manifest_hash": "sha256-contract:c016f3f02d9cd89d9bbb9b125afbe0f5038a09b9d453cb9005ffb78754e83165",
+      "prior_test_hashes": {
+        "tests/test_behavioral.py": "sha256-pyast:88ca47f16ffe38b79a48b4c8df2d8d062c999fb27560020da6cb1991be2d2312",
+        "tests/test_behavioral_identity.py": "sha256-pyast:7d97ada8e87cf47bbeff76571004f3a74d931965306b7497c6726dc4453e4e94"
+      },
+      "revised_at": "2026-07-22T10:21:59.986180+00:00",
+      "reason": "Migrated by maid manifest promote: manifests/drafts/fix-csharp-behavioral-identity.manifest.yaml -> manifests/fix-csharp-behavioral-identity.manifest.yaml",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:f1b5682abc91297908063cbc1508182031157da14e7937ae271562294866e9c9",
+      "prior_test_hashes": {
+        "tests/test_behavioral.py": "sha256-pyast:88ca47f16ffe38b79a48b4c8df2d8d062c999fb27560020da6cb1991be2d2312",
+        "tests/test_behavioral_identity.py": "sha256-pyast:7d97ada8e87cf47bbeff76571004f3a74d931965306b7497c6726dc4453e4e94"
+      },
+      "revised_at": "2026-07-22T10:24:03.772729+00:00",
+      "reason": "Include the existing behavioral dependency in the locked validation command after E230 exposed incomplete test coverage.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [
+          "uv run pytest tests/test_behavioral_identity.py tests/test_behavioral.py -q"
+        ],
+        "validate_commands_removed": [
+          "uv run pytest tests/test_behavioral_identity.py -q"
+        ]
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:0605e3f0bd12acd3f8d045a0d7b92dd793eadf4b55ab42dbbf54cf225a4eca77",
+      "prior_test_hashes": {
+        "tests/test_behavioral.py": "sha256-pyast:88ca47f16ffe38b79a48b4c8df2d8d062c999fb27560020da6cb1991be2d2312",
+        "tests/test_behavioral_identity.py": "sha256-pyast:7d97ada8e87cf47bbeff76571004f3a74d931965306b7497c6726dc4453e4e94"
+      },
+      "revised_at": "2026-07-22T10:27:35.602993+00:00",
+      "reason": "Cover direct typeof interface and nameof interface-method references from the Deckhand reproduction.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [
+          "tests/test_behavioral_identity.py:test_typeof_and_nameof_cover_interface_method_identity",
+          "tests/test_behavioral_identity.py:test_typeof_and_nameof_cover_interface_method_identity:kind=test_function"
+        ],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:29824f4554abfb2ffedf2787936239871634d43ebeafa53b75434cbd10970d36",
+      "prior_test_hashes": {
+        "tests/test_behavioral.py": "sha256-pyast:88ca47f16ffe38b79a48b4c8df2d8d062c999fb27560020da6cb1991be2d2312",
+        "tests/test_behavioral_identity.py": "sha256-pyast:5173dc0f4ad486379deffc866cbfb849aca38c3404c997667bed45dbec6f66f8"
+      },
+      "revised_at": "2026-07-22T10:38:13.421758+00:00",
+      "reason": "Add reviewer-required lexical-scope, normalized-type, qualified-nameof, and target-typed-initializer regressions.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [
+          "tests/test_behavioral_identity.py:test_nullable_and_qualified_generic_types_use_base_identity",
+          "tests/test_behavioral_identity.py:test_nullable_and_qualified_generic_types_use_base_identity:kind=test_function",
+          "tests/test_behavioral_identity.py:test_qualified_nameof_uses_terminal_method_and_type_owner",
+          "tests/test_behavioral_identity.py:test_qualified_nameof_uses_terminal_method_and_type_owner:kind=test_function",
+          "tests/test_behavioral_identity.py:test_receiver_bindings_do_not_leak_between_test_methods",
+          "tests/test_behavioral_identity.py:test_receiver_bindings_do_not_leak_between_test_methods:kind=test_function",
+          "tests/test_behavioral_identity.py:test_target_typed_object_initializer_covers_attributes",
+          "tests/test_behavioral_identity.py:test_target_typed_object_initializer_covers_attributes:kind=test_function"
+        ],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:478ba1c398796242404f17e87155e6715b03afd9b6975f543f265fdbb132653a",
+      "prior_test_hashes": {
+        "tests/test_behavioral.py": "sha256-pyast:88ca47f16ffe38b79a48b4c8df2d8d062c999fb27560020da6cb1991be2d2312",
+        "tests/test_behavioral_identity.py": "sha256-pyast:6165f1e25db7b65b2e31985bb7cce750f571bfa1b5f6786fc64962512919a99f"
+      },
+      "revised_at": "2026-07-22T10:40:32.415387+00:00",
+      "reason": "Add reviewer-required nested lexical-block receiver binding isolation.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [
+          "tests/test_behavioral_identity.py:test_receiver_bindings_do_not_leak_between_lexical_blocks",
+          "tests/test_behavioral_identity.py:test_receiver_bindings_do_not_leak_between_lexical_blocks:kind=test_function"
+        ],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    }
+  ],
+  "red_evidence": {
+    "red": true,
+    "captured_at": "2026-07-22T10:40:32.653892+00:00",
+    "commands": [
+      {
+        "command": "uv run pytest tests/test_behavioral_identity.py tests/test_behavioral.py -q",
+        "exit_code": 1,
+        "output_tail": "                    InductionDetailsVm details = new() { Location = \"Hall\" };\n                }\n            }\n            \"\"\")\n    \n>       assert (ArtifactKind.CLASS, \"InductionDetailsVm\", None) in identities\nE       AssertionError: assert (<ArtifactKind.CLASS: 'class'>, 'InductionDetailsVm', None) in {(<ArtifactKind.TEST_FUNCTION: 'test_function'>, 'Builds', None)}\n\ntests/test_behavioral_identity.py:174: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_behavioral_identity.py::test_type_annotations_cover_interface_identity_and_resolve_method_owner\nFAILED tests/test_behavioral_identity.py::test_var_object_creation_resolves_instance_method_owner\nFAILED tests/test_behavioral_identity.py::test_object_initializer_members_cover_class_attributes\nFAILED tests/test_behavioral_identity.py::test_typeof_and_nameof_cover_interface_method_identity\nFAILED tests/test_behavioral_identity.py::test_receiver_bindings_do_not_leak_between_test_methods\nFAILED tests/test_behavioral_identity.py::test_receiver_bindings_do_not_leak_between_lexical_blocks\nFAILED tests/test_behavioral_identity.py::test_nullable_and_qualified_generic_types_use_base_identity\nFAILED tests/test_behavioral_identity.py::test_qualified_nameof_uses_terminal_method_and_type_owner\nFAILED tests/test_behavioral_identity.py::test_target_typed_object_initializer_covers_attributes\n9 failed, 6 passed in 0.11s",
+        "classification": "red"
+      }
+    ],
+    "sibling_dirty_paths": [
+      "uv.lock"
+    ]
+  },
+  "legacy_baseline": null,
+  "agent": null,
+  "_manifest_contract": {
+    "artifacts": [
+      "tests/test_behavioral_identity.py:test_nullable_and_qualified_generic_types_use_base_identity",
+      "tests/test_behavioral_identity.py:test_nullable_and_qualified_generic_types_use_base_identity:kind=test_function",
+      "tests/test_behavioral_identity.py:test_object_initializer_members_cover_class_attributes",
+      "tests/test_behavioral_identity.py:test_object_initializer_members_cover_class_attributes:kind=test_function",
+      "tests/test_behavioral_identity.py:test_qualified_nameof_uses_terminal_method_and_type_owner",
+      "tests/test_behavioral_identity.py:test_qualified_nameof_uses_terminal_method_and_type_owner:kind=test_function",
+      "tests/test_behavioral_identity.py:test_receiver_bindings_do_not_leak_between_lexical_blocks",
+      "tests/test_behavioral_identity.py:test_receiver_bindings_do_not_leak_between_lexical_blocks:kind=test_function",
+      "tests/test_behavioral_identity.py:test_receiver_bindings_do_not_leak_between_test_methods",
+      "tests/test_behavioral_identity.py:test_receiver_bindings_do_not_leak_between_test_methods:kind=test_function",
+      "tests/test_behavioral_identity.py:test_target_typed_object_initializer_covers_attributes",
+      "tests/test_behavioral_identity.py:test_target_typed_object_initializer_covers_attributes:kind=test_function",
+      "tests/test_behavioral_identity.py:test_type_annotations_cover_interface_identity_and_resolve_method_owner",
+      "tests/test_behavioral_identity.py:test_type_annotations_cover_interface_identity_and_resolve_method_owner:kind=test_function",
+      "tests/test_behavioral_identity.py:test_typeof_and_nameof_cover_interface_method_identity",
+      "tests/test_behavioral_identity.py:test_typeof_and_nameof_cover_interface_method_identity:kind=test_function",
+      "tests/test_behavioral_identity.py:test_var_object_creation_resolves_instance_method_owner",
+      "tests/test_behavioral_identity.py:test_var_object_creation_resolves_instance_method_owner:kind=test_function"
+    ],
+    "files": {
+      "create": [
+        "tests/test_behavioral_identity.py"
+      ],
+      "edit": [],
+      "read": [
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "src/maid_validator_csharp/_behavioral.py",
+        "tests/test_behavioral.py"
+      ],
+      "scope": [
+        "src/maid_validator_csharp/_behavioral.py"
+      ],
+      "delete": [],
+      "snapshot": []
+    },
+    "file_contract": {
+      "create": [
+        {
+          "path": "tests/test_behavioral_identity.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_type_annotations_cover_interface_identity_and_resolve_method_owner"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_var_object_creation_resolves_instance_method_owner"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_object_initializer_members_cover_class_attributes"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_typeof_and_nameof_cover_interface_method_identity"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_receiver_bindings_do_not_leak_between_test_methods"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_receiver_bindings_do_not_leak_between_lexical_blocks"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_nullable_and_qualified_generic_types_use_base_identity"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_qualified_nameof_uses_terminal_method_and_type_owner"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_target_typed_object_initializer_covers_attributes"
+            }
+          ]
+        }
+      ],
+      "read": [
+        "src/maid_validator_csharp/_behavioral.py",
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "tests/test_behavioral.py"
+      ],
+      "scope": [
+        {
+          "path": "src/maid_validator_csharp/_behavioral.py",
+          "reason": "Harden the existing contracted collector without changing its public signature."
+        }
+      ]
+    },
+    "test_files": [
+      "tests/test_behavioral.py",
+      "tests/test_behavioral_identity.py"
+    ],
+    "validate_commands": [
+      "uv run pytest tests/test_behavioral_identity.py tests/test_behavioral.py -q"
+    ]
+  }
+}
