@@ -29,6 +29,12 @@ jobs:
         with:
           enable-cache: false
           python-version: ${{ matrix.python-version }}
+      - name: Reject development-only Runner source
+        run: |
+          if grep -Fq "[tool.uv.sources]" pyproject.toml; then
+            echo "::error::Remove [tool.uv.sources], raise the maid-runner lower bound, and relock from indexes before tagging."
+            exit 1
+          fi
       - name: Install locked dependencies
         run: uv sync --locked
       - name: Run release gates

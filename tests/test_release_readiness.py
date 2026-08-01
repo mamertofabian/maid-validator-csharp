@@ -8,6 +8,7 @@ except ModuleNotFoundError:  # pragma: no cover - exercised by the Python 3.10 C
     import tomli as tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
+RUNNER_TYPE_HOOK_COMMIT = "170545963d7c4509e6f905325b5bb79b5da513fa"
 
 
 def _project_config() -> dict:
@@ -35,11 +36,23 @@ def test_project_metadata_is_ready_for_first_pypi_release() -> None:
 
 def test_release_uses_only_published_maid_runner_sources() -> None:
     config = _project_config()
+    releasing = (ROOT / "RELEASING.md").read_text()
+
+    assert "maid-runner>=2.17,<3" in config["project"]["dependencies"]
+    assert "BaseValidator.types_match" in releasing
+    assert "remove" in releasing.lower()
+    assert "lower bound" in releasing.lower()
+
+
+def test_development_uses_adjacent_maid_runner_source() -> None:
+    config = _project_config()
     lock_text = (ROOT / "uv.lock").read_text()
 
-    assert "sources" not in config.get("tool", {}).get("uv", {})
-    assert 'source = { editable = "../maid-runner" }' not in lock_text
-    assert '{ name = "maid-runner", editable = "../maid-runner" }' not in lock_text
+    assert config["tool"]["uv"]["sources"]["maid-runner"] == {
+        "path": "../maid-runner",
+        "editable": True,
+    }
+    assert 'source = { editable = "../maid-runner" }' in lock_text
 
 
 def test_release_documentation_covers_license_history_and_operator_steps() -> None:
@@ -67,6 +80,12 @@ def test_ci_and_publish_workflows_enforce_release_gates() -> None:
     for version in ("3.10", "3.11", "3.12", "3.13", "3.14"):
         assert version in ci
     assert "uv sync --locked" in ci
+    assert "working-directory: maid-validator-csharp" in ci
+    assert "path: maid-validator-csharp" in ci
+    assert "repository: mamertofabian/maid-runner" in ci
+    assert f"ref: {RUNNER_TYPE_HOOK_COMMIT}" in ci
+    assert "path: maid-runner" in ci
+    assert "cache-dependency-glob: maid-validator-csharp/uv.lock" in ci
     assert "uv run pytest -q" in ci
     assert "uv run ruff check src/ tests/" in ci
     assert "uv run black --check src/ tests/" in ci
@@ -87,3 +106,5 @@ def test_ci_and_publish_workflows_enforce_release_gates() -> None:
     assert "uv venv" in publish
     assert "maid validators --json" in publish
     assert "CSharpValidator" in publish
+    assert "Reject development-only Runner source" in publish
+    assert "[tool.uv.sources]" in publish

@@ -1,0 +1,100 @@
+# draft-kind: epic
+# promotion: split-before-promote
+schema: "2"
+goal: "Retire the C# validator's avoidable overload, type, namespace, partial-declaration, and parser-fidelity limitations through language-aware Runner contracts and explicit optional Roslyn semantics"
+type: feature
+created: "2026-08-01T14:20:00+08:00"
+metadata:
+  status: planning
+  runner_contract_sequence: "093"
+  tags:
+    - csharp
+    - validator-plugin
+    - overloads
+    - type-normalization
+    - namespace-identity
+    - partial-types
+    - roslyn
+  priority: high
+description: |
+  Split-before-promote plugin roadmap paired with additive MAID Runner 093
+  contracts. The
+  published v0.1.0 plugin remains lightweight and tree-sitter-backed. Each
+  child waits for the corresponding additive Runner contract, uses the local
+  Runner checkout during development, and restores published dependency
+  resolution before any later release preparation.
+
+  Pinned decisions:
+
+  - Preserve raw C# spellings in collected artifacts and snapshots. A C#
+    canonicalizer compares aliases (int/System.Int32), nullable forms,
+    generics, arrays, tuples, and qualified names without rewriting source.
+  - Preserve method name/owner matching for representative manifests while
+    emitting an optional canonical signature for exact overload contracts.
+    Syntax-only behavioral collection must not guess an overload target.
+  - Track the active block/file-scoped namespace on definitions. Behavioral
+    using, alias, qualified-name, and global-using identities remain exact;
+    ambiguous unqualified names require compiler evidence rather than a union
+    of possible namespaces.
+  - Keep partial declarations file-owned while sharing namespace/type identity.
+    Roslyn-backed project aggregation may connect parts but may not erase the
+    declaring file or manufacture members in files where they do not exist.
+  - Keep tree-sitter as the no-.NET syntax path. Roslyn is an explicit optional
+    semantic capability for project-aware overload binding, namespace
+    resolution, partial types, and current compiler syntax. If requested but
+    unavailable or incompatible, return a visible unsupported/error result;
+    never silently report syntax-only evidence as semantic evidence.
+  - Replace the README's broad limitation list only after the focused C# syntax
+    matrix, supported .NET SDK policy, plugin conformance kit, and cross-repo
+    end-to-end manifests pass.
+
+  Planned children, in dependency order:
+
+  1. normalize-csharp-types — implement the Runner 093-02 comparison hook and
+     characterize equivalent/non-equivalent C# type spellings.
+  2. distinguish-csharp-overloads — emit definition signatures through Runner
+     093-03 and keep unresolved syntax-only calls explicitly non-exact.
+  3. resolve-csharp-module-identities — populate definition namespace and
+     behavioral using/alias identities through Runner 093-04.
+  4. add-csharp-project-semantic-bridge — add an explicit Roslyn bridge through
+     Runner 093-05, with SDK discovery, bounded subprocess protocol, caching,
+     timeouts, diagnostics, and no silent fallback.
+  5. aggregate-csharp-partial-types — use compiler evidence to associate parts
+     while preserving per-file artifact ownership.
+  6. characterize-supported-csharp-syntax — exercise current language syntax,
+     tree-sitter/Roslyn parity, parse failures, and the supported SDK matrix;
+     update README and changelog only after the capability contract is green.
+
+  Recalled Outcomes require nearest-visible binding rather than file-wide
+  receiver unions, exact exclusion of static/type-alias using forms without
+  semantic evidence, and full plugin discovery/end-to-end validation rather
+  than collector-only tests. Those constraints are carried into every child.
+temptations:
+  - risk: "Do not encode C# canonical types into the existing global Python normalizer."
+    instead: "Use the language-aware Runner hook and keep the default comparator unchanged for existing validators."
+  - risk: "Do not claim exact overload or namespace coverage from argument count, variable names, or every visible using directive."
+    instead: "Emit an exact discriminator only from unambiguous syntax or Roslyn symbol evidence; otherwise retain representative matching."
+  - risk: "Do not make missing dotnet look like successful semantic validation."
+    instead: "Expose unsupported/error state in collection output and test the no-SDK, timeout, compiler-diagnostic, and protocol-failure paths."
+  - risk: "Do not merge partial declarations by copying every member into every file's artifact list."
+    instead: "Preserve file ownership and attach shared logical identity/project relationships separately."
+files:
+  edit:
+    - path: manifests/drafts/resolve-csharp-validator-limitations.epic.yaml
+      artifacts:
+        - kind: attribute
+          name: _resolve_csharp_validator_limitations_epic
+          of: manifest
+          type: draft epic
+          description: "Split-before-promote plugin roadmap paired with additive MAID Runner 093 contracts."
+  read:
+    - README.md
+    - src/maid_validator_csharp/validator.py
+    - src/maid_validator_csharp/_parse.py
+    - src/maid_validator_csharp/_implementation.py
+    - src/maid_validator_csharp/_behavioral.py
+    - tests/test_conformance.py
+    - tests/test_implementation.py
+    - tests/test_behavioral.py
+validate:
+  - uv run maid validate manifests/drafts/resolve-csharp-validator-limitations.epic.yaml --mode schema --quiet

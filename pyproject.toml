@@ -46,6 +46,9 @@ dev = [
     "tomli>=2.0.0; python_version < '3.11'",
 ]
 
+[tool.uv.sources]
+maid-runner = { path = "../maid-runner", editable = true }
+
 [build-system]
 requires = ["setuptools==83.0.0", "wheel==0.47.0"]
 build-backend = "setuptools.build_meta"

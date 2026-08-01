@@ -57,11 +57,37 @@ and identity references for the types (`new Widget()`) and methods
 ## Development
 
 ```bash
-uv sync            # or: uv pip install -e '.[dev]'
+uv sync            # uses the adjacent ../maid-runner checkout
 uv run pytest -v   # runs the MAID conformance kit + hand-written suites
 uv run ruff check src/ tests/
 uv run black --check src/ tests/
 ```
+
+The current development branch uses MAID Runner's unreleased
+`BaseValidator.types_match` plugin contract. Its `[tool.uv.sources]` entry is
+development-only: the next release must wait for that Runner contract to be
+published, raise the package's Runner lower bound, remove the local source,
+and relock from package indexes. `CSharpValidator` fails visibly when loaded by
+an older Runner instead of silently applying Python-oriented type comparison.
+
+## C# type comparison
+
+Manifest comparison accepts equivalent C# source spellings without changing
+the raw types emitted by collection or snapshots. Supported equivalences are:
+
+- every built-in C# keyword/CLR type pair, including native integers and
+  `dynamic`/`System.Object`;
+- `global::` qualification and explicit `List`, `Dictionary`, `Task`, and
+  `Nullable` BCL qualifications;
+- nested generics, nullable known value types, nullable annotations on known
+  reference types, arrays and their ranks, and tuple element names.
+
+Comparison remains conservative without compiler evidence. Arbitrary custom
+names do not collapse across namespaces, unknown `T?` or `Widget?` forms stay
+distinct from their unannotated form, and array suffix order, tuple position,
+and tuple arity remain significant. Pointer and function-pointer spellings use
+a deterministic lexical comparison when they fall outside the structured
+subset.
 
 The [MAID conformance kit](https://github.com/mamertofabian/maid-runner/blob/main/docs/validator-plugin-authoring.md#conformance-kit)
 (`tests/test_conformance.py`) is the acceptance bar: it proves the collector
@@ -75,10 +101,10 @@ See [CHANGELOG.md](CHANGELOG.md) for release history and
 - **Method overloads** collapse on MAID's `method:Type.Name` identity key, so
   overloaded methods can't be distinguished individually. Declare one
   representative, or leave `args` unspecified in the manifest.
-- **Type normalization:** MAID Runner's type comparison is Python-type-centric;
-  C# generics/nullable (`List<T>`, `Task<T>`, `int?`) are recorded verbatim and
-  are not normalized. Keep manifest `type`/`returns` unspecified (matches
-  anything) or byte-exact.
+- **Semantic type identity:** syntax-level comparison cannot determine whether
+  an arbitrary custom type is a value type, resolve aliases/usings, or prove
+  compiler-bound identity. Those cases remain exact until the optional Roslyn
+  semantic path is implemented.
 - **Module identity:** C# module identity is the in-file `namespace`, not a
   path-derived module, so cross-file `using`/namespace resolution is not yet
   performed; behavioral matching binds on kind/name/parent.

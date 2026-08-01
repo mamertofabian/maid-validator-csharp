@@ -22,14 +22,21 @@ require approval before the publish job receives its short-lived OIDC token.
 1. Start from a clean, up-to-date `main` branch.
 2. Update `project.version` in `pyproject.toml` and move the release notes from
    `Unreleased` into a dated changelog entry.
-3. Refresh and verify the published-source lock:
+3. Confirm MAID Runner has published the first version containing
+   `BaseValidator.types_match`. Raise the `maid-runner` lower bound in
+   `project.dependencies` to that exact contract version; do not release this
+   feature while the lower bound still permits an older Runner.
+4. Remove the entire development-only `[tool.uv.sources]` table and refresh the
+   lock from package indexes:
 
    ```bash
-   uv lock
+   uv lock --refresh
    uv lock --check
    ```
 
-4. Run the repository gates:
+   Verify that neither `pyproject.toml` nor `uv.lock` contains the adjacent
+   `../maid-runner` editable source before continuing.
+5. Run the repository gates with the published Runner resolution:
 
    ```bash
    uv run pytest -q
@@ -39,14 +46,18 @@ require approval before the publish job receives its short-lived OIDC token.
    uv run maid test
    ```
 
-5. Build and inspect the exact release artifacts locally:
+6. Build and inspect the exact release artifacts locally:
 
    ```bash
    uv build
    uvx --from twine==7.0.0 twine check dist/*
    ```
 
-6. After the reviewed release commit is on `main`, create and push the matching
+7. Install the built wheel in an isolated environment and confirm
+   `CSharpValidator` is discovered and constructs successfully with the
+   published Runner dependency. This is required in addition to testing the
+   editable source checkout.
+8. After the reviewed release commit is on `main`, create and push the matching
    annotated tag. For the initial release:
 
    ```bash

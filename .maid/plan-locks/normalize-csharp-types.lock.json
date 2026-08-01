@@ -1,0 +1,437 @@
+{
+  "manifest_path": "manifests/normalize-csharp-types.manifest.yaml",
+  "manifest_hash": "sha256-contract:710207ea1704efcd7d45818c65136a0dc075d920e88eebb8553e5461e6aa9d8c",
+  "test_hashes": {
+    "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+    "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45",
+    "tests/test_release_readiness.py": "sha256-pyast:v2:dc7034fdecae5d050af60842b26c6aeb053c0a1f45df4f066d561d2b2c162bb1"
+  },
+  "created_at": "2026-08-01T08:32:34.885632+00:00",
+  "revision": 2,
+  "revisions": [
+    {
+      "prior_manifest_hash": "sha256-contract:6b37c46b8c763ce33d667c3e1e98dab9562a76cd58fddb76812d72b252c0f449",
+      "prior_test_hashes": {
+        "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
+        "tests/test_type_normalization.py": "sha256-pyast:e09fb65307d0201458ea51a68cffce604f1e7b871619ccae21e5fdfb1c8f0693",
+        "tests/test_release_readiness.py": "sha256-pyast:da365ee3f3c595372225d221bddee83f104b35933556f599a0598588426656d5"
+      },
+      "revised_at": "2026-08-01T08:50:37.213671+00:00",
+      "reason": "Independent review found a conservative fallback token-boundary collision and hosted CI could not resolve the approved adjacent Runner source; tighten the behavioral contract and add pinned CI/release workflow scope.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [
+          "tests/test_release_readiness.py:test_ci_and_publish_workflows_enforce_release_gates",
+          "tests/test_release_readiness.py:test_ci_and_publish_workflows_enforce_release_gates:kind=test_function"
+        ],
+        "artifacts_removed": [],
+        "files_added": [
+          "scope:.github/workflows/ci.yml",
+          "scope:.github/workflows/publish.yml"
+        ],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    }
+  ],
+  "red_evidence": {
+    "red": true,
+    "captured_at": "2026-08-01T08:50:38.527542+00:00",
+    "commands": [
+      {
+        "command": "uv run pytest tests/test_type_normalization.py tests/test_implementation.py tests/test_release_readiness.py -q",
+        "exit_code": 1,
+        "output_tail": "FAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[delegate* unmanaged[Cdecl]<ref int, Widget>-delegate* unmanaged[Cdecl]<refSystem.Int32, Widget>]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[List<int>-List<string>]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[int[]-int[,]]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[int[][,]-int[,][]]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[(int, string)-(string, int)]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[(int, string)-(int, string, bool)]\nFAILED tests/test_type_normalization.py::test_unspecified_manifest_type_preserves_runner_semantics\nFAILED tests/test_type_normalization.py::test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing[int *-System.Int32*]\nFAILED tests/test_type_normalization.py::test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing[delegate * unmanaged [ Cdecl ] < int , void >-delegate* unmanaged[Cdecl]<System.Int32,System.Void>]\nFAILED tests/test_type_normalization.py::test_validation_engine_accepts_nested_csharp_alias_equivalence\nFAILED tests/test_type_normalization.py::test_missing_runner_type_hook_fails_visibly\nFAILED tests/test_release_readiness.py::test_release_uses_only_published_maid_runner_sources\nFAILED tests/test_release_readiness.py::test_development_uses_adjacent_maid_runner_source\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n49 failed, 18 passed in 0.30s\n\n   Building maid-validator-csharp @ file:///home/atomrem/projects/codefrost-dev/maid-validator-csharp\n      Built maid-validator-csharp @ file:///home/atomrem/projects/codefrost-dev/maid-validator-csharp\nUninstalled 2 packages in 1ms\nInstalled 2 packages in 3ms",
+        "classification": "red"
+      },
+      {
+        "command": "uv run maid validate manifests/normalize-csharp-types.manifest.yaml --mode behavioral --quiet",
+        "exit_code": 0,
+        "output_tail": "",
+        "classification": "not_red"
+      },
+      {
+        "command": "uv run maid validate manifests/normalize-csharp-types.manifest.yaml --mode schema --quiet",
+        "exit_code": 0,
+        "output_tail": "",
+        "classification": "not_red"
+      }
+    ],
+    "sibling_dirty_paths": [
+      ".maid/plan-locks/fix-csharp-behavioral-identity.lock.json",
+      ".maid/plan-locks/prepare-pypi-release.lock.json",
+      "manifests/fix-csharp-behavioral-identity.manifest.yaml"
+    ]
+  },
+  "legacy_baseline": null,
+  "agent": null,
+  "_manifest_contract": {
+    "artifacts": [
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match:arg=implementation_type:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match:arg=manifest_type:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match:kind=function",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match:returns=bool",
+      "src/maid_validator_csharp/_types.py:function:normalize_csharp_type",
+      "src/maid_validator_csharp/_types.py:function:normalize_csharp_type:arg=type_str:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/_types.py:function:normalize_csharp_type:kind=function",
+      "src/maid_validator_csharp/_types.py:function:normalize_csharp_type:returns=Optional[str]",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator:base=BaseValidator",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator:kind=class",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:arg=implementation_type:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:arg=manifest_type:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:kind=method",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:of=CSharpValidator",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:returns=bool",
+      "tests/test_release_readiness.py:test_ci_and_publish_workflows_enforce_release_gates",
+      "tests/test_release_readiness.py:test_ci_and_publish_workflows_enforce_release_gates:kind=test_function",
+      "tests/test_release_readiness.py:test_development_uses_adjacent_maid_runner_source",
+      "tests/test_release_readiness.py:test_development_uses_adjacent_maid_runner_source:kind=test_function",
+      "tests/test_release_readiness.py:test_release_uses_only_published_maid_runner_sources",
+      "tests/test_release_readiness.py:test_release_uses_only_published_maid_runner_sources:kind=test_function",
+      "tests/test_type_normalization.py:test_collected_and_snapshot_type_spellings_remain_raw",
+      "tests/test_type_normalization.py:test_collected_and_snapshot_type_spellings_remain_raw:kind=test_function",
+      "tests/test_type_normalization.py:test_distinct_csharp_type_spellings_do_not_match",
+      "tests/test_type_normalization.py:test_distinct_csharp_type_spellings_do_not_match:kind=test_function",
+      "tests/test_type_normalization.py:test_equivalent_csharp_type_spellings_match",
+      "tests/test_type_normalization.py:test_equivalent_csharp_type_spellings_match:kind=test_function",
+      "tests/test_type_normalization.py:test_missing_runner_type_hook_fails_visibly",
+      "tests/test_type_normalization.py:test_missing_runner_type_hook_fails_visibly:kind=test_function",
+      "tests/test_type_normalization.py:test_unspecified_manifest_type_preserves_runner_semantics",
+      "tests/test_type_normalization.py:test_unspecified_manifest_type_preserves_runner_semantics:kind=test_function",
+      "tests/test_type_normalization.py:test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing",
+      "tests/test_type_normalization.py:test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing:kind=test_function",
+      "tests/test_type_normalization.py:test_validation_engine_accepts_nested_csharp_alias_equivalence",
+      "tests/test_type_normalization.py:test_validation_engine_accepts_nested_csharp_alias_equivalence:kind=test_function"
+    ],
+    "files": {
+      "create": [
+        "src/maid_validator_csharp/_types.py",
+        "tests/test_type_normalization.py"
+      ],
+      "edit": [
+        "src/maid_validator_csharp/validator.py",
+        "tests/test_release_readiness.py"
+      ],
+      "read": [
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "manifests/drafts/resolve-csharp-validator-limitations.epic.yaml",
+        "manifests/prepare-pypi-release.manifest.yaml",
+        "src/maid_validator_csharp/_implementation.py",
+        "tests/test_implementation.py"
+      ],
+      "scope": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/publish.yml",
+        "README.md",
+        "RELEASING.md",
+        "pyproject.toml",
+        "uv.lock"
+      ],
+      "delete": [],
+      "snapshot": []
+    },
+    "file_contract": {
+      "create": [
+        {
+          "path": "src/maid_validator_csharp/_types.py",
+          "artifacts": [
+            {
+              "kind": "function",
+              "name": "normalize_csharp_type",
+              "description": "Canonicalizes supported C# type structure while preserving namespace-sensitive custom identities.",
+              "args": [
+                {
+                  "name": "type_str",
+                  "type": "Optional[str]"
+                }
+              ],
+              "returns": "Optional[str]"
+            },
+            {
+              "kind": "function",
+              "name": "csharp_types_match",
+              "description": "Preserves Runner's unspecified/missing semantics and compares canonical C# type forms.",
+              "args": [
+                {
+                  "name": "manifest_type",
+                  "type": "Optional[str]"
+                },
+                {
+                  "name": "implementation_type",
+                  "type": "Optional[str]"
+                }
+              ],
+              "returns": "bool"
+            }
+          ]
+        },
+        {
+          "path": "tests/test_type_normalization.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_equivalent_csharp_type_spellings_match",
+              "source_scenario": "Equivalent keyword/CLR, qualified BCL, generic, nullable, array, and tuple spellings are compared.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "CSharpValidator.types_match"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Every pinned equivalent pair matches without changing its input strings."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_distinct_csharp_type_spellings_do_not_match",
+              "source_scenario": "Different primitives, nullability, namespaces, generic arguments, array ranks, tuple positions, and arities are compared.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "CSharpValidator.types_match"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Each semantically distinct or syntax-ambiguous pair remains non-equivalent."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_unspecified_manifest_type_preserves_runner_semantics",
+              "source_scenario": "Manifest or implementation type values are absent or empty.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "csharp_types_match"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "An unspecified manifest type accepts any implementation type; a specified manifest type rejects a missing implementation type."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing",
+              "source_scenario": "Pointer and function-pointer spellings fall outside the structured canonical subset.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "normalize_csharp_type"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Canonicalization produces a deterministic conservative form and equal formatting variants match without an exception."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_collected_and_snapshot_type_spellings_remain_raw",
+              "source_scenario": "C# source uses fully qualified nested generic types in a public method.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "CSharpValidator.collect_implementation_artifacts"
+                  }
+                },
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "CSharpValidator.generate_snapshot"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Arguments and return types retain the exact source spellings even though equivalent aliases compare successfully."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_validation_engine_accepts_nested_csharp_alias_equivalence",
+              "source_scenario": "A manifest uses concise C# aliases while implementation source uses fully qualified nested BCL types.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "ValidationEngine.validate"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "End-to-end implementation validation uses the registered C# hook and reports no E302 mismatch."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_missing_runner_type_hook_fails_visibly",
+              "source_scenario": "The installed BaseValidator lacks the required types_match contract.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "CSharpValidator"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Validator construction raises a targeted ImportError instead of silently running with Python-oriented type comparison."
+              }
+            }
+          ]
+        }
+      ],
+      "edit": [
+        {
+          "path": "src/maid_validator_csharp/validator.py",
+          "artifacts": [
+            {
+              "kind": "class",
+              "name": "CSharpValidator",
+              "bases": [
+                "BaseValidator"
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "types_match",
+              "description": "Delegates type equivalence to the C# canonicalizer and leaves raw collector output unchanged.",
+              "of": "CSharpValidator",
+              "args": [
+                {
+                  "name": "manifest_type",
+                  "type": "Optional[str]"
+                },
+                {
+                  "name": "implementation_type",
+                  "type": "Optional[str]"
+                }
+              ],
+              "returns": "bool"
+            }
+          ]
+        },
+        {
+          "path": "tests/test_release_readiness.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_release_uses_only_published_maid_runner_sources",
+              "source_scenario": "Development uses an adjacent Runner, but published package metadata and the release exit gate must remain index-based.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "tomllib.loads"
+                  }
+                },
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "Path.read_text"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Published dependency metadata remains index-based and release instructions require removing the local source and raising the lower bound before publication."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_development_uses_adjacent_maid_runner_source",
+              "source_scenario": "The repository needs unreleased Runner contract 093-02 during development.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "tomllib.loads"
+                  }
+                },
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "Path.read_text"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Project and lock metadata select the exact adjacent editable Runner checkout without changing the published dependency declaration."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_ci_and_publish_workflows_enforce_release_gates",
+              "source_scenario": "Hosted CI needs unreleased Runner contract 093-02, while tagged publishing must use only released dependencies.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "Path.read_text"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "CI checks out the exact reviewed Runner commit in the adjacent path and tagged release testing rejects development-only source metadata before dependency installation."
+              }
+            }
+          ]
+        }
+      ],
+      "read": [
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "manifests/prepare-pypi-release.manifest.yaml",
+        "manifests/drafts/resolve-csharp-validator-limitations.epic.yaml",
+        "src/maid_validator_csharp/_implementation.py",
+        "tests/test_implementation.py"
+      ],
+      "scope": [
+        {
+          "path": "pyproject.toml",
+          "reason": "Restore the documented adjacent editable maid-runner source for development against unreleased contract 093-02."
+        },
+        {
+          "path": "uv.lock",
+          "reason": "Relock the development environment to the adjacent Runner checkout while retaining published dependency metadata until the Runner release version exists."
+        },
+        {
+          "path": "README.md",
+          "reason": "Replace the broad type-normalization limitation with the exact supported equivalences, conservative boundaries, and unreleased Runner requirement."
+        },
+        {
+          "path": "RELEASING.md",
+          "reason": "Require the eventual Runner contract version lower bound, local-source removal, index relock, and installed-wheel verification before publishing this feature."
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "reason": "Provision the exact reviewed Runner contract commit beside the plugin so hosted matrix jobs can resolve the adjacent editable development source."
+        },
+        {
+          "path": ".github/workflows/publish.yml",
+          "reason": "Fail tagged release testing visibly while development-only source metadata remains, rather than provisioning unreleased Runner code."
+        }
+      ]
+    },
+    "test_files": [
+      "tests/test_implementation.py",
+      "tests/test_release_readiness.py",
+      "tests/test_type_normalization.py"
+    ],
+    "validate_commands": [
+      "uv run pytest tests/test_type_normalization.py tests/test_implementation.py tests/test_release_readiness.py -q",
+      "uv run maid validate manifests/normalize-csharp-types.manifest.yaml --mode behavioral --quiet",
+      "uv run maid validate manifests/normalize-csharp-types.manifest.yaml --mode schema --quiet"
+    ]
+  }
+}

@@ -8,13 +8,14 @@ files once this package is installed.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Union
+from typing import Optional, Union
 
 from maid_runner.validators.base import BaseValidator, CollectionResult
 
 from maid_validator_csharp._behavioral import collect_behavioral_artifacts
 from maid_validator_csharp._implementation import collect_implementation_artifacts
 from maid_validator_csharp._parse import parse_csharp_source
+from maid_validator_csharp._types import csharp_types_match
 
 try:
     from tree_sitter import Language, Parser
@@ -29,6 +30,11 @@ _LANGUAGE = "csharp"
 
 class CSharpValidator(BaseValidator):
     def __init__(self) -> None:
+        if not callable(getattr(BaseValidator, "types_match", None)):
+            raise ImportError(
+                "maid-validator-csharp requires a maid-runner release that "
+                "provides BaseValidator.types_match"
+            )
         if not _HAS_TREE_SITTER:
             raise ImportError(
                 "tree-sitter and tree-sitter-c-sharp are required for C# "
@@ -39,6 +45,13 @@ class CSharpValidator(BaseValidator):
     @classmethod
     def supported_extensions(cls) -> tuple[str, ...]:
         return (".cs",)
+
+    def types_match(
+        self,
+        manifest_type: Optional[str],
+        implementation_type: Optional[str],
+    ) -> bool:
+        return csharp_types_match(manifest_type, implementation_type)
 
     def collect_implementation_artifacts(
         self,

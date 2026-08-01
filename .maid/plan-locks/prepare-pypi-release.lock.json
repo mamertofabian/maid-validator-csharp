@@ -2,15 +2,16 @@
   "manifest_path": "manifests/prepare-pypi-release.manifest.yaml",
   "manifest_hash": "sha256-contract:fb0ba3704d5e6d4686995e973288c397ddf1372d74db3c821f01f7c7d3c3c7c3",
   "test_hashes": {
-    "tests/test_release_readiness.py": "sha256-pyast:8f5b5880ef6e9fda932da6587b97a9eddb58eadb1f5b65eb510de1708a041cb0",
-    "tests/test_behavioral.py": "sha256-pyast:3cae87cf5317bb400b4971ef1012eb06bdbe225fd3e552b581ee371bb857730b",
-    "tests/test_behavioral_identity.py": "sha256-pyast:f052c0e48b577d7414415dbc808100bb7d2c60bc09ef104684520fd8ff4b6d3b",
-    "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
-    "tests/test_internals.py": "sha256-pyast:a4157804be95e9339690731d8d30011e6b1367efb5e8df785496c602f5cbfa5b",
-    "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+    "tests/test_release_readiness.py": "sha256-pyast:v2:dc7034fdecae5d050af60842b26c6aeb053c0a1f45df4f066d561d2b2c162bb1",
+    "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+    "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
+    "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+    "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
+    "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d",
+    "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45"
   },
   "created_at": "2026-08-01T04:41:27.538415+00:00",
-  "revision": 6,
+  "revision": 8,
   "revisions": [
     {
       "prior_manifest_hash": "sha256-contract:1ca5d2f6a6d1664c2a52c9d3d653ec70595db4cf1db5cb59ce7dcac97c25d423",
@@ -116,6 +117,51 @@
       },
       "revised_at": "2026-08-01T04:56:49.599639+00:00",
       "reason": "Independent review required main-ancestry enforcement and an automated isolated-wheel discovery smoke test; also pin the release build/check toolchain.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:fb0ba3704d5e6d4686995e973288c397ddf1372d74db3c821f01f7c7d3c3c7c3",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:8f5b5880ef6e9fda932da6587b97a9eddb58eadb1f5b65eb510de1708a041cb0",
+        "tests/test_behavioral.py": "sha256-pyast:3cae87cf5317bb400b4971ef1012eb06bdbe225fd3e552b581ee371bb857730b",
+        "tests/test_behavioral_identity.py": "sha256-pyast:f052c0e48b577d7414415dbc808100bb7d2c60bc09ef104684520fd8ff4b6d3b",
+        "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
+        "tests/test_internals.py": "sha256-pyast:a4157804be95e9339690731d8d30011e6b1367efb5e8df785496c602f5cbfa5b",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+      },
+      "revised_at": "2026-08-01T08:39:51.297261+00:00",
+      "reason": "Accept the approved additive release-readiness test evolution for adjacent Runner development while preserving the original published-source release contract and red evidence.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:fb0ba3704d5e6d4686995e973288c397ddf1372d74db3c821f01f7c7d3c3c7c3",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:v2:6fff2c80ae99b4e22dade8276420274df3576c8cd24d8f4d0f4ddc622b67fec1",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d",
+        "tests/test_type_normalization.py": "sha256-pyast:v2:144ceb6011a55f80f35fba35b3aae1825f676c18ea33951983c7076aad68a8be"
+      },
+      "revised_at": "2026-08-01T08:52:25.506638+00:00",
+      "reason": "Accept the independently reviewed collision-resistance and hosted CI release-gate test evolution from normalize-csharp-types revision 2 while preserving the original release contract and red evidence.",
       "agent": null,
       "contract_delta": {
         "artifacts_added": [],
@@ -263,7 +309,8 @@
       "tests/test_implementation.py",
       "tests/test_internals.py",
       "tests/test_namespace_behavioral.py",
-      "tests/test_release_readiness.py"
+      "tests/test_release_readiness.py",
+      "tests/test_type_normalization.py"
     ],
     "validate_commands": [
       "uv run pytest tests/test_release_readiness.py -q",

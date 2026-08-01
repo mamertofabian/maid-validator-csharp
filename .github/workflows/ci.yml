@@ -16,6 +16,9 @@ jobs:
   test:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: maid-validator-csharp
     strategy:
       fail-fast: false
       matrix:
@@ -24,10 +27,19 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          path: maid-validator-csharp
+          persist-credentials: false
+      - name: Check out MAID Runner type-hook contract
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: mamertofabian/maid-runner
+          ref: 170545963d7c4509e6f905325b5bb79b5da513fa
+          path: maid-runner
           persist-credentials: false
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
         with:
           enable-cache: true
+          cache-dependency-glob: maid-validator-csharp/uv.lock
           python-version: ${{ matrix.python-version }}
       - name: Install locked dependencies
         run: uv sync --locked
