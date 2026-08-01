@@ -1,0 +1,138 @@
+# draft-kind: implementation
+# MAID manifest - a machine-checked contract for one change.
+# Declares the intent, the files it may touch, and the commands that verify it.
+# Nothing here is needed to build or run this project; safe to ignore.
+# What it is: https://github.com/mamertofabian/maid-runner
+schema: "2"
+goal: Prepare maid-validator-csharp 0.1.0 for its first trustworthy PyPI release
+  with accurate dependency metadata, reproducible CI, and OIDC trusted
+  publishing.
+type: feature
+created: "2026-08-01T04:41:28Z"
+description: |
+  Make the existing 0.1.0 package publishable without changing collector behavior.
+  The release metadata must require the MAID Runner version that first exposed the
+  validator-plugin contract and a tree-sitter runtime that supports the C# grammar's
+  ABI, remove the local editable source override from the release lock, and document
+  the package license, history, and operator procedure.
+  GitHub Actions must validate all supported Python versions, build and check both
+  distribution formats, verify that a release tag matches project.version and points
+  to a commit on main, smoke-test the installed wheel, and use PyPI Trusted Publishing
+  rather than a long-lived API token. The initial release remains 0.1.0 because no
+  distribution currently exists on PyPI.
+temptations:
+  - risk: "Do not leave the ../maid-runner editable source override in release metadata
+      or uv.lock."
+    instead: "Remove [tool.uv.sources], relock against published indexes, and run
+      the complete suite with the published maid-runner resolution."
+  - risk: "Do not claim compatibility with MAID Runner versions that predate the public
+      validator-plugin contract."
+    instead: "Set the lower bound to maid-runner 2.17.0, where entry-point discovery
+      and the conformance kit became public, while retaining the <3 semver ceiling."
+  - risk: "Do not publish with a repository secret containing a long-lived PyPI token."
+    instead: "Use the pypi GitHub environment, id-token: write, and pypa/gh-action-pypi-publish
+      for OIDC Trusted Publishing."
+  - risk: "Do not let a v-prefixed tag publish a differently versioned artifact."
+    instead: "Make the release workflow compare github.ref_name without its v prefix
+      to project.version before building or publishing."
+  - risk: "Do not treat a locally editable install as distribution evidence."
+    instead: "Build wheel and sdist, run twine check, install the wheel in an isolated
+      environment, and confirm the CSharpValidator entry point is active."
+files:
+  create:
+    - path: tests/test_release_readiness.py
+      artifacts:
+        - kind: test_function
+          name: test_project_metadata_is_ready_for_first_pypi_release
+        - kind: test_function
+          name: test_release_uses_only_published_maid_runner_sources
+        - kind: test_function
+          name:
+            test_release_documentation_covers_license_history_and_operator_steps
+        - kind: test_function
+          name: test_ci_and_publish_workflows_enforce_release_gates
+  read:
+    - manifests/csharp-validator-plugin.manifest.yaml
+    - manifests/fix-csharp-behavioral-identity.manifest.yaml
+    - manifests/fix-csharp-namespace-coverage.manifest.yaml
+  scope:
+    - path: pyproject.toml
+      reason: Correct release dependency and project metadata and remove the
+        development-only source override.
+    - path: uv.lock
+      reason: Relock entirely against published package indexes after removing
+        the local maid-runner source.
+    - path: README.md
+      reason: Add release-facing badges, links, and installation/release
+        documentation without changing runtime API.
+    - path: LICENSE
+      reason: Include the declared MIT license text in source and built
+        distributions.
+    - path: CHANGELOG.md
+      reason: Record the user-visible contents of the initial 0.1.0 release.
+    - path: RELEASING.md
+      reason: Document trusted-publisher setup, validation, version/tag, and
+        post-publish verification steps.
+    - path: .github/workflows/ci.yml
+      reason: Validate the supported Python matrix and repository quality gates
+        on pushes and pull requests.
+    - path: .github/workflows/publish.yml
+      reason: Build, verify, and publish tagged distributions through PyPI OIDC,
+        then create the GitHub release.
+validate:
+  - [uv, run, pytest, tests/test_release_readiness.py, -q]
+  - [uv, run, pytest, tests/, -q]
+  - [uv, run, ruff, check, src/, tests/]
+  - [uv, run, black, --check, src/, tests/]
+outcome:
+  status: completed
+  completed_at: "2026-08-01T04:59:32Z"
+  summary: Prepared maid-validator-csharp 0.1.0 for its first PyPI release with accurate minimum dependencies, published-source locking, cross-version CI, pinned and hardened OIDC publishing, and verified wheel discovery.
+  rationale: The local editable maid-runner source had hidden release-environment risks. Testing built wheels against minimum and latest published dependencies exposed and corrected both the MAID Runner plugin-contract lower bound and the tree-sitter grammar ABI lower bound. Publication now requires a reviewed main-branch commit, matching version tag, checked distributions, and successful discovery from the installed wheel before OIDC credentials are available.
+  lessons:
+    - lesson_type: validation
+      summary: Test the built wheel against exact minimum dependency versions; ordinary latest-resolution tests did not reveal that tree-sitter 0.23 and 0.24 reject the C# grammar ABI.
+      tags: [pypi, dependency-bounds, tree-sitter, wheel]
+      paths:
+        - pyproject.toml
+        - tests/test_release_readiness.py
+    - lesson_type: security
+      summary: A matching version tag is insufficient release authorization; the workflow must also prove the tagged commit belongs to the protected main branch before requesting PyPI OIDC access.
+      tags: [github-actions, trusted-publishing, supply-chain]
+      paths:
+        - .github/workflows/publish.yml
+        - RELEASING.md
+    - lesson_type: workflow
+      summary: MAID sha256-pyast plan-lock hashes vary across supported Python interpreters, so mixed-version historical locks can produce false E701 tampering failures even when source is unchanged.
+      tags: [maid-workflow, plan-lock, python-version]
+      paths:
+        - .maid/plan-locks/prepare-pypi-release.lock.json
+  review_notes:
+    - source: independent-review-round-1
+      severity: needs-changes
+      summary: Required main-branch ancestry enforcement and an automated installed-wheel discovery check; also advised pinning the build/check toolchain.
+    - source: independent-review-round-2
+      severity: ready
+      summary: Confirmed both blockers and the advisory were resolved, workflow permissions and action pins remained hardened, and the change stayed within manifest scope.
+  validation:
+    - command: [uv, run, pytest, -q]
+      status: passed
+      summary: All 62 repository tests passed on each supported Python version from 3.10 through 3.14.
+    - command: [uv, run, ruff, check, src/, tests/]
+      status: passed
+      summary: Source and test lint passed.
+    - command: [uv, run, black, --check, src/, tests/]
+      status: passed
+      summary: Source and test formatting passed.
+    - command: [uv, run, maid, validate]
+      status: passed
+      summary: All four active MAID manifests passed implementation validation with zero regressions.
+    - command: [uv, run, maid, test]
+      status: passed
+      summary: All three consolidated MAID behavioral command groups passed.
+    - command: [uv, build]
+      status: passed
+      summary: The pinned setuptools and wheel backend built both release distributions; Twine 7 validated them and a clean environment discovered active CSharpValidator from the wheel.
+    - command: [uvx, zizmor, --persona, auditor, .github/workflows/ci.yml, .github/workflows/publish.yml]
+      status: passed
+      summary: The offline GitHub Actions security audit reported no findings.

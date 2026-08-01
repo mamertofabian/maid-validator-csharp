@@ -1,0 +1,275 @@
+{
+  "manifest_path": "manifests/prepare-pypi-release.manifest.yaml",
+  "manifest_hash": "sha256-contract:fb0ba3704d5e6d4686995e973288c397ddf1372d74db3c821f01f7c7d3c3c7c3",
+  "test_hashes": {
+    "tests/test_release_readiness.py": "sha256-pyast:8f5b5880ef6e9fda932da6587b97a9eddb58eadb1f5b65eb510de1708a041cb0",
+    "tests/test_behavioral.py": "sha256-pyast:3cae87cf5317bb400b4971ef1012eb06bdbe225fd3e552b581ee371bb857730b",
+    "tests/test_behavioral_identity.py": "sha256-pyast:f052c0e48b577d7414415dbc808100bb7d2c60bc09ef104684520fd8ff4b6d3b",
+    "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
+    "tests/test_internals.py": "sha256-pyast:a4157804be95e9339690731d8d30011e6b1367efb5e8df785496c602f5cbfa5b",
+    "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+  },
+  "created_at": "2026-08-01T04:41:27.538415+00:00",
+  "revision": 6,
+  "revisions": [
+    {
+      "prior_manifest_hash": "sha256-contract:1ca5d2f6a6d1664c2a52c9d3d653ec70595db4cf1db5cb59ce7dcac97c25d423",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:8cf9e10048f83f6a0ee02bd34ccc4dabc081084832b504f039b83888f7f14582",
+        "tests/test_behavioral.py": "sha256-pyast:3cae87cf5317bb400b4971ef1012eb06bdbe225fd3e552b581ee371bb857730b",
+        "tests/test_behavioral_identity.py": "sha256-pyast:f052c0e48b577d7414415dbc808100bb7d2c60bc09ef104684520fd8ff4b6d3b",
+        "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
+        "tests/test_internals.py": "sha256-pyast:a4157804be95e9339690731d8d30011e6b1367efb5e8df785496c602f5cbfa5b",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+      },
+      "revised_at": "2026-08-01T04:41:28.664750+00:00",
+      "reason": "Migrated by maid manifest promote: manifests/drafts/prepare-pypi-release.manifest.yaml -> manifests/prepare-pypi-release.manifest.yaml",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:31880d9617eadb318bf4170e16cea4a5a3ea4baf196c4511ee931fb3a0b17619",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:8cf9e10048f83f6a0ee02bd34ccc4dabc081084832b504f039b83888f7f14582",
+        "tests/test_behavioral.py": "sha256-pyast:3cae87cf5317bb400b4971ef1012eb06bdbe225fd3e552b581ee371bb857730b",
+        "tests/test_behavioral_identity.py": "sha256-pyast:f052c0e48b577d7414415dbc808100bb7d2c60bc09ef104684520fd8ff4b6d3b",
+        "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
+        "tests/test_internals.py": "sha256-pyast:a4157804be95e9339690731d8d30011e6b1367efb5e8df785496c602f5cbfa5b",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+      },
+      "revised_at": "2026-08-01T04:45:38.682331+00:00",
+      "reason": "Use an explicit tests/ path so MAID recognizes the full-suite behavioral gate after E230 rejected pathless pytest.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [
+          "uv run pytest tests/ -q"
+        ],
+        "validate_commands_removed": [
+          "uv run pytest -q"
+        ]
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:24a001a1b218de7825297617023fabcfb0d0be01f22a6ae21db3858f5aaca89e",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:8cf9e10048f83f6a0ee02bd34ccc4dabc081084832b504f039b83888f7f14582",
+        "tests/test_behavioral.py": "sha256-pyast:3cae87cf5317bb400b4971ef1012eb06bdbe225fd3e552b581ee371bb857730b",
+        "tests/test_behavioral_identity.py": "sha256-pyast:f052c0e48b577d7414415dbc808100bb7d2c60bc09ef104684520fd8ff4b6d3b",
+        "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
+        "tests/test_internals.py": "sha256-pyast:a4157804be95e9339690731d8d30011e6b1367efb5e8df785496c602f5cbfa5b",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+      },
+      "revised_at": "2026-08-01T04:48:13.627111+00:00",
+      "reason": "Support the declared Python 3.10 matrix with a tomllib-compatible import and conditional tomli test dependency.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:24a001a1b218de7825297617023fabcfb0d0be01f22a6ae21db3858f5aaca89e",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:754a3f4cee354f72591a9f43128df77dd4fdb5eab26c5bb80655319095925526",
+        "tests/test_behavioral.py": "sha256-pyast:3cae87cf5317bb400b4971ef1012eb06bdbe225fd3e552b581ee371bb857730b",
+        "tests/test_behavioral_identity.py": "sha256-pyast:f052c0e48b577d7414415dbc808100bb7d2c60bc09ef104684520fd8ff4b6d3b",
+        "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
+        "tests/test_internals.py": "sha256-pyast:a4157804be95e9339690731d8d30011e6b1367efb5e8df785496c602f5cbfa5b",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+      },
+      "revised_at": "2026-08-01T04:49:47.931961+00:00",
+      "reason": "Require tree-sitter 0.25.0 because isolated minimum installs proved 0.23 and 0.24 reject the C# grammar ABI 15.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:96afde7fd28cd64c04dd3a1f25d4028b315c2a323636c6837dc73e7b45619809",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:0a32aad8d92b18e8e17c35136ba894135af024ac559a1c092051fd54b269c78e",
+        "tests/test_behavioral.py": "sha256-pyast:3cae87cf5317bb400b4971ef1012eb06bdbe225fd3e552b581ee371bb857730b",
+        "tests/test_behavioral_identity.py": "sha256-pyast:f052c0e48b577d7414415dbc808100bb7d2c60bc09ef104684520fd8ff4b6d3b",
+        "tests/test_implementation.py": "sha256-pyast:9d58e8ce0706ded2a067e5b8270b5f85c69c8a989d16c9c1004dceb08115f09f",
+        "tests/test_internals.py": "sha256-pyast:a4157804be95e9339690731d8d30011e6b1367efb5e8df785496c602f5cbfa5b",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:97a366c2b62e53fb5fec306c6767dedec02f28935320ee404c1aad42a4d48fd8"
+      },
+      "revised_at": "2026-08-01T04:56:49.599639+00:00",
+      "reason": "Independent review required main-ancestry enforcement and an automated isolated-wheel discovery smoke test; also pin the release build/check toolchain.",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    }
+  ],
+  "red_evidence": {
+    "red": true,
+    "captured_at": "2026-08-01T04:56:50.686686+00:00",
+    "commands": [
+      {
+        "command": "uv run pytest tests/test_release_readiness.py -q",
+        "exit_code": 1,
+        "output_tail": "        the built-in open() function does.\n        \"\"\"\n        if \"b\" not in mode:\n            encoding = io.text_encoding(encoding)\n>       return io.open(self, mode, buffering, encoding, errors, newline)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/home/atomrem/projects/codefrost-dev/maid-validator-csharp/.github/workflows/ci.yml'\n\n../../../.local/share/uv/python/cpython-3.14.3-linux-x86_64-gnu/lib/python3.14/pathlib/__init__.py:771: FileNotFoundError\n=========================== short test summary info ============================\nFAILED tests/test_release_readiness.py::test_project_metadata_is_ready_for_first_pypi_release\nFAILED tests/test_release_readiness.py::test_release_uses_only_published_maid_runner_sources\nFAILED tests/test_release_readiness.py::test_release_documentation_covers_license_history_and_operator_steps\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n4 failed in 0.06s\n\n   Building maid-validator-csharp @ file:///home/atomrem/projects/codefrost-dev/maid-validator-csharp\n      Built maid-validator-csharp @ file:///home/atomrem/projects/codefrost-dev/maid-validator-csharp\nUninstalled 2 packages in 6ms\nInstalled 2 packages in 0.79ms",
+        "classification": "red"
+      },
+      {
+        "command": "uv run pytest tests/ -q",
+        "exit_code": 1,
+        "output_tail": "\n    def open(self, mode='r', buffering=-1, encoding=None,\n             errors=None, newline=None):\n        \"\"\"\n        Open the file pointed to by this path and return a file object, as\n        the built-in open() function does.\n        \"\"\"\n        if \"b\" not in mode:\n            encoding = io.text_encoding(encoding)\n>       return io.open(self, mode, buffering, encoding, errors, newline)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/home/atomrem/projects/codefrost-dev/maid-validator-csharp/.github/workflows/ci.yml'\n\n../../../.local/share/uv/python/cpython-3.14.3-linux-x86_64-gnu/lib/python3.14/pathlib/__init__.py:771: FileNotFoundError\n=========================== short test summary info ============================\nFAILED tests/test_release_readiness.py::test_project_metadata_is_ready_for_first_pypi_release\nFAILED tests/test_release_readiness.py::test_release_uses_only_published_maid_runner_sources\nFAILED tests/test_release_readiness.py::test_release_documentation_covers_license_history_and_operator_steps\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n4 failed, 58 passed in 0.15s",
+        "classification": "red"
+      },
+      {
+        "command": "uv run ruff check src/ tests/",
+        "exit_code": 0,
+        "output_tail": "All checks passed!",
+        "classification": "not_red"
+      },
+      {
+        "command": "uv run black --check src/ tests/",
+        "exit_code": 0,
+        "output_tail": "Warning: Python 3.14 cannot parse code formatted for Python 3.15. To fix this: run Black with Python 3.15, set --target-version to py314, or use --fast to skip the safety check. Black's safety check verifies equivalence by parsing the AST, which fails when the running Python is older than the target version.\nAll done! \u2728 \ud83c\udf70 \u2728\n12 files would be left unchanged.",
+        "classification": "not_red"
+      }
+    ]
+  },
+  "legacy_baseline": null,
+  "agent": null,
+  "_manifest_contract": {
+    "artifacts": [
+      "tests/test_release_readiness.py:test_ci_and_publish_workflows_enforce_release_gates",
+      "tests/test_release_readiness.py:test_ci_and_publish_workflows_enforce_release_gates:kind=test_function",
+      "tests/test_release_readiness.py:test_project_metadata_is_ready_for_first_pypi_release",
+      "tests/test_release_readiness.py:test_project_metadata_is_ready_for_first_pypi_release:kind=test_function",
+      "tests/test_release_readiness.py:test_release_documentation_covers_license_history_and_operator_steps",
+      "tests/test_release_readiness.py:test_release_documentation_covers_license_history_and_operator_steps:kind=test_function",
+      "tests/test_release_readiness.py:test_release_uses_only_published_maid_runner_sources",
+      "tests/test_release_readiness.py:test_release_uses_only_published_maid_runner_sources:kind=test_function"
+    ],
+    "files": {
+      "create": [
+        "tests/test_release_readiness.py"
+      ],
+      "edit": [],
+      "read": [
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "manifests/fix-csharp-behavioral-identity.manifest.yaml",
+        "manifests/fix-csharp-namespace-coverage.manifest.yaml"
+      ],
+      "scope": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/publish.yml",
+        "CHANGELOG.md",
+        "LICENSE",
+        "README.md",
+        "RELEASING.md",
+        "pyproject.toml",
+        "uv.lock"
+      ],
+      "delete": [],
+      "snapshot": []
+    },
+    "file_contract": {
+      "create": [
+        {
+          "path": "tests/test_release_readiness.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_project_metadata_is_ready_for_first_pypi_release"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_release_uses_only_published_maid_runner_sources"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_release_documentation_covers_license_history_and_operator_steps"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_ci_and_publish_workflows_enforce_release_gates"
+            }
+          ]
+        }
+      ],
+      "read": [
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "manifests/fix-csharp-behavioral-identity.manifest.yaml",
+        "manifests/fix-csharp-namespace-coverage.manifest.yaml"
+      ],
+      "scope": [
+        {
+          "path": "pyproject.toml",
+          "reason": "Correct release dependency and project metadata and remove the development-only source override."
+        },
+        {
+          "path": "uv.lock",
+          "reason": "Relock entirely against published package indexes after removing the local maid-runner source."
+        },
+        {
+          "path": "README.md",
+          "reason": "Add release-facing badges, links, and installation/release documentation without changing runtime API."
+        },
+        {
+          "path": "LICENSE",
+          "reason": "Include the declared MIT license text in source and built distributions."
+        },
+        {
+          "path": "CHANGELOG.md",
+          "reason": "Record the user-visible contents of the initial 0.1.0 release."
+        },
+        {
+          "path": "RELEASING.md",
+          "reason": "Document trusted-publisher setup, validation, version/tag, and post-publish verification steps."
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "reason": "Validate the supported Python matrix and repository quality gates on pushes and pull requests."
+        },
+        {
+          "path": ".github/workflows/publish.yml",
+          "reason": "Build, verify, and publish tagged distributions through PyPI OIDC, then create the GitHub release."
+        }
+      ]
+    },
+    "test_files": [
+      "tests/test_behavioral.py",
+      "tests/test_behavioral_identity.py",
+      "tests/test_implementation.py",
+      "tests/test_internals.py",
+      "tests/test_namespace_behavioral.py",
+      "tests/test_release_readiness.py"
+    ],
+    "validate_commands": [
+      "uv run pytest tests/test_release_readiness.py -q",
+      "uv run pytest tests/ -q",
+      "uv run ruff check src/ tests/",
+      "uv run black --check src/ tests/"
+    ]
+  }
+}

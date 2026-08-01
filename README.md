@@ -1,5 +1,9 @@
 # maid-validator-csharp
 
+[![CI](https://github.com/mamertofabian/maid-validator-csharp/actions/workflows/ci.yml/badge.svg)](https://github.com/mamertofabian/maid-validator-csharp/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/maid-validator-csharp.svg)](https://pypi.org/project/maid-validator-csharp/)
+[![Python](https://img.shields.io/pypi/pyversions/maid-validator-csharp.svg)](https://pypi.org/project/maid-validator-csharp/)
+
 A C# (`.cs`) language validator plugin for
 [MAID Runner](https://github.com/mamertofabian/maid-runner), backed by
 [tree-sitter-c-sharp](https://github.com/tree-sitter/tree-sitter-c-sharp).
@@ -13,7 +17,7 @@ support boundary: new languages ship as external packages.
 ## Install
 
 ```bash
-pip install maid-runner maid-validator-csharp
+pip install maid-validator-csharp
 # or, for local development against a checked-out maid-runner:
 uv pip install -e ../maid-runner -e .
 ```
@@ -22,7 +26,7 @@ Confirm it is active:
 
 ```bash
 maid validators
-# csharp   .cs   maid-validator-csharp <ver>   active
+# CSharpValidator   .cs   maid-validator-csharp <ver>   active
 ```
 
 ## What it collects
@@ -62,6 +66,9 @@ uv run black --check src/ tests/
 The [MAID conformance kit](https://github.com/mamertofabian/maid-runner/blob/main/docs/validator-plugin-authoring.md#conformance-kit)
 (`tests/test_conformance.py`) is the acceptance bar: it proves the collector
 cannot manufacture false-green validation for C#.
+
+See [CHANGELOG.md](CHANGELOG.md) for release history and
+[RELEASING.md](RELEASING.md) for the trusted-publishing procedure.
 
 ## Known limitations
 
