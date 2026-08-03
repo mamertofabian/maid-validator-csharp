@@ -4,10 +4,10 @@
   "test_hashes": {
     "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
     "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45",
-    "tests/test_release_readiness.py": "sha256-pyast:v2:dc7034fdecae5d050af60842b26c6aeb053c0a1f45df4f066d561d2b2c162bb1"
+    "tests/test_release_readiness.py": "sha256-pyast:v2:f3abae2cfdef2a2f8d514e9bbea0899da10ac0acb6804d233952fbd3745e2509"
   },
   "created_at": "2026-08-01T08:32:34.885632+00:00",
-  "revision": 2,
+  "revision": 3,
   "revisions": [
     {
       "prior_manifest_hash": "sha256-contract:6b37c46b8c763ce33d667c3e1e98dab9562a76cd58fddb76812d72b252c0f449",
@@ -33,16 +33,35 @@
         "validate_commands_added": [],
         "validate_commands_removed": []
       }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:710207ea1704efcd7d45818c65136a0dc075d920e88eebb8553e5461e6aa9d8c",
+      "prior_test_hashes": {
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45",
+        "tests/test_release_readiness.py": "sha256-pyast:v2:dc7034fdecae5d050af60842b26c6aeb053c0a1f45df4f066d561d2b2c162bb1"
+      },
+      "revised_at": "2026-08-01T11:41:59.737345+00:00",
+      "reason": "Accept the approved additive exact-signature CI pin evolution and refresh the shared release-readiness evidence",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
     }
   ],
   "red_evidence": {
     "red": true,
-    "captured_at": "2026-08-01T08:50:38.527542+00:00",
+    "captured_at": "2026-08-01T11:42:00.373568+00:00",
     "commands": [
       {
         "command": "uv run pytest tests/test_type_normalization.py tests/test_implementation.py tests/test_release_readiness.py -q",
         "exit_code": 1,
-        "output_tail": "FAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[delegate* unmanaged[Cdecl]<ref int, Widget>-delegate* unmanaged[Cdecl]<refSystem.Int32, Widget>]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[List<int>-List<string>]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[int[]-int[,]]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[int[][,]-int[,][]]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[(int, string)-(string, int)]\nFAILED tests/test_type_normalization.py::test_distinct_csharp_type_spellings_do_not_match[(int, string)-(int, string, bool)]\nFAILED tests/test_type_normalization.py::test_unspecified_manifest_type_preserves_runner_semantics\nFAILED tests/test_type_normalization.py::test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing[int *-System.Int32*]\nFAILED tests/test_type_normalization.py::test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing[delegate * unmanaged [ Cdecl ] < int , void >-delegate* unmanaged[Cdecl]<System.Int32,System.Void>]\nFAILED tests/test_type_normalization.py::test_validation_engine_accepts_nested_csharp_alias_equivalence\nFAILED tests/test_type_normalization.py::test_missing_runner_type_hook_fails_visibly\nFAILED tests/test_release_readiness.py::test_release_uses_only_published_maid_runner_sources\nFAILED tests/test_release_readiness.py::test_development_uses_adjacent_maid_runner_source\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n49 failed, 18 passed in 0.30s\n\n   Building maid-validator-csharp @ file:///home/atomrem/projects/codefrost-dev/maid-validator-csharp\n      Built maid-validator-csharp @ file:///home/atomrem/projects/codefrost-dev/maid-validator-csharp\nUninstalled 2 packages in 1ms\nInstalled 2 packages in 3ms",
+        "output_tail": "=================================== FAILURES ===================================\n_____________ test_ci_and_publish_workflows_enforce_release_gates ______________\n\n    def test_ci_and_publish_workflows_enforce_release_gates() -> None:\n        ci = (ROOT / \".github/workflows/ci.yml\").read_text()\n        publish = (ROOT / \".github/workflows/publish.yml\").read_text()\n    \n        for version in (\"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\"):\n            assert version in ci\n        assert \"uv sync --locked\" in ci\n        assert \"working-directory: maid-validator-csharp\" in ci\n        assert \"path: maid-validator-csharp\" in ci\n        assert \"repository: mamertofabian/maid-runner\" in ci\n>       assert f\"ref: {RUNNER_CONTRACT_COMMIT}\" in ci\nE       AssertionError: assert 'ref: f251bd5c6530cfe4d9be84b05dc59d488aa8940e' in 'name: CI\\n\\non:\\n  push:\\n    branches: [main]\\n  pull_request:\\n\\npermissions:\\n  contents: read\\n\\nconcurrency:\\n  .../\\n      - name: Validate MAID contracts\\n        run: |\\n          uv run maid validate\\n          uv run maid test\\n'\n\ntests/test_release_readiness.py:86: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n1 failed, 66 passed in 0.11s",
         "classification": "red"
       },
       {
@@ -59,9 +78,9 @@
       }
     ],
     "sibling_dirty_paths": [
-      ".maid/plan-locks/fix-csharp-behavioral-identity.lock.json",
-      ".maid/plan-locks/prepare-pypi-release.lock.json",
-      "manifests/fix-csharp-behavioral-identity.manifest.yaml"
+      ".maid/plan-locks/distinguish-csharp-overloads.lock.json",
+      "manifests/distinguish-csharp-overloads.manifest.yaml",
+      "tests/test_overload_signatures.py"
     ]
   },
   "legacy_baseline": null,

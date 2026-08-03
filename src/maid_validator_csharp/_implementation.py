@@ -24,6 +24,8 @@ from typing import Any, Optional
 from maid_runner.core.types import ArgSpec, ArtifactKind
 from maid_runner.validators.base import FoundArtifact
 
+from maid_validator_csharp._types import normalize_csharp_type
+
 _TYPE_DECLARATIONS = {
     "class_declaration": ArtifactKind.CLASS,
     "struct_declaration": ArtifactKind.CLASS,
@@ -112,15 +114,17 @@ def _visit(
     if node_type == "local_function_statement":
         # Only top-level local functions are reachable here (method bodies are
         # never recursed), so every one is a namespace-free FUNCTION.
+        name = _text(_field(node, "name"), source)
         args, returns = _signature(node, source, returns_field="type")
         artifacts.append(
             FoundArtifact(
                 kind=ArtifactKind.FUNCTION,
-                name=_text(_field(node, "name"), source),
+                name=name,
                 args=args,
                 returns=returns,
                 type_parameters=_type_parameters(node, source),
                 is_async=_is_async(node),
+                signature=_callable_signature(node, source, name),
                 line=_line(node),
             )
         )
@@ -179,15 +183,17 @@ def _collect_method(
     args, returns = _signature(
         node, source, returns_field=None if is_constructor else "returns"
     )
+    name = _text(_field(node, "name"), source)
     artifacts.append(
         FoundArtifact(
             kind=ArtifactKind.METHOD,
-            name=_text(_field(node, "name"), source),
+            name=name,
             of=current_type,
             args=args,
             returns=returns,
             is_async=_is_async(node),
             type_parameters=_type_parameters(node, source),
+            signature=_callable_signature(node, source, name),
             line=_line(node),
         )
     )
@@ -235,21 +241,81 @@ def _signature(
 
 
 def _parameters(params: Any, source: bytes) -> tuple[ArgSpec, ...]:
-    args: list[ArgSpec] = []
+    return tuple(arg for arg, _ in _parameter_details(params, source))
+
+
+def _parameter_details(
+    params: Any,
+    source: bytes,
+) -> tuple[tuple[ArgSpec, bool], ...]:
+    details: list[tuple[ArgSpec, bool]] = []
     for child in params.children:
+        if child.type == "params":
+            name_node = _field(params, "name")
+            type_node = _field(params, "type")
+            if name_node is not None and type_node is not None:
+                details.append(
+                    (
+                        ArgSpec(
+                            name=_text(name_node, source),
+                            type=_type_text(type_node, source),
+                        ),
+                        False,
+                    )
+                )
+            continue
         if child.type != "parameter":
             continue
         name_node = _field(child, "name")
         if name_node is None:
             continue
-        args.append(
-            ArgSpec(
-                name=_text(name_node, source),
-                type=_type_text(_field(child, "type"), source),
-                default=_default_value(child, source),
+        details.append(
+            (
+                ArgSpec(
+                    name=_text(name_node, source),
+                    type=_type_text(_field(child, "type"), source),
+                    default=_default_value(child, source),
+                ),
+                _is_by_reference_parameter(child, source),
             )
         )
-    return tuple(args)
+    return tuple(details)
+
+
+def _is_by_reference_parameter(param: Any, source: bytes) -> bool:
+    return any(
+        child.type == "modifier" and _text(child, source) in {"ref", "in", "out"}
+        for child in param.children
+    )
+
+
+def _callable_signature(node: Any, source: bytes, name: str) -> str:
+    signature_name = _signature_name(node, source, name)
+    type_parameters = _type_parameters(node, source)
+    generic_arity = f"``{len(type_parameters)}" if type_parameters else ""
+    params = _field(node, "parameters")
+    parameter_types: list[str] = []
+    if params is not None:
+        for arg, is_by_reference in _parameter_details(params, source):
+            canonical_type = _signature_parameter_type(arg)
+            prefix = "ref " if is_by_reference else ""
+            parameter_types.append(f"{prefix}{canonical_type}")
+    return f"{signature_name}{generic_arity}({','.join(parameter_types)})"
+
+
+def _signature_name(node: Any, source: bytes, name: str) -> str:
+    interface = _first_child_of_type(node, "explicit_interface_specifier")
+    if interface is None:
+        return name
+    qualifier = _text(interface, source).removesuffix(".")
+    canonical_qualifier = normalize_csharp_type(qualifier) or qualifier
+    return f"{canonical_qualifier}.{name}"
+
+
+def _signature_parameter_type(arg: ArgSpec) -> str:
+    if arg.name == "__arglist" and arg.type is None:
+        return "__arglist"
+    return normalize_csharp_type(arg.type) or arg.type or ""
 
 
 def _default_value(param: Any, source: bytes) -> Optional[str]:

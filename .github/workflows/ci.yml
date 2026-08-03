@@ -29,11 +29,11 @@ jobs:
         with:
           path: maid-validator-csharp
           persist-credentials: false
-      - name: Check out MAID Runner type-hook contract
+      - name: Check out MAID Runner exact-signature contract
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: mamertofabian/maid-runner
-          ref: 170545963d7c4509e6f905325b5bb79b5da513fa
+          ref: f251bd5c6530cfe4d9be84b05dc59d488aa8940e
           path: maid-runner
           persist-credentials: false
       - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6

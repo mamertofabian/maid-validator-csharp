@@ -2,16 +2,17 @@
   "manifest_path": "manifests/prepare-pypi-release.manifest.yaml",
   "manifest_hash": "sha256-contract:fb0ba3704d5e6d4686995e973288c397ddf1372d74db3c821f01f7c7d3c3c7c3",
   "test_hashes": {
-    "tests/test_release_readiness.py": "sha256-pyast:v2:dc7034fdecae5d050af60842b26c6aeb053c0a1f45df4f066d561d2b2c162bb1",
+    "tests/test_release_readiness.py": "sha256-pyast:v2:f3abae2cfdef2a2f8d514e9bbea0899da10ac0acb6804d233952fbd3745e2509",
     "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
     "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
     "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
     "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
     "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d",
+    "tests/test_overload_signatures.py": "sha256-pyast:v2:d9ae42c56c34ad4aa1791eccdb5c521c758876ce438ccc4379221299f65597e8",
     "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45"
   },
   "created_at": "2026-08-01T04:41:27.538415+00:00",
-  "revision": 8,
+  "revision": 10,
   "revisions": [
     {
       "prior_manifest_hash": "sha256-contract:1ca5d2f6a6d1664c2a52c9d3d653ec70595db4cf1db5cb59ce7dcac97c25d423",
@@ -171,22 +172,69 @@
         "validate_commands_added": [],
         "validate_commands_removed": []
       }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:fb0ba3704d5e6d4686995e973288c397ddf1372d74db3c821f01f7c7d3c3c7c3",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:v2:dc7034fdecae5d050af60842b26c6aeb053c0a1f45df4f066d561d2b2c162bb1",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d",
+        "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45"
+      },
+      "revised_at": "2026-08-01T11:42:05.312371+00:00",
+      "reason": "Accept the approved additive exact-signature CI pin evolution and refresh the shared release-readiness evidence",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:fb0ba3704d5e6d4686995e973288c397ddf1372d74db3c821f01f7c7d3c3c7c3",
+      "prior_test_hashes": {
+        "tests/test_release_readiness.py": "sha256-pyast:v2:f3abae2cfdef2a2f8d514e9bbea0899da10ac0acb6804d233952fbd3745e2509",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d",
+        "tests/test_overload_signatures.py": "sha256-pyast:v2:c07df6a2f7ef1cbc7f230fc839721526287a2dcf0ba3217476cf805c0506693c",
+        "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45"
+      },
+      "revised_at": "2026-08-01T11:50:14.238561+00:00",
+      "reason": "Refresh the full-suite behavioral hash after approved overload collision coverage was added",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
     }
   ],
   "red_evidence": {
     "red": true,
-    "captured_at": "2026-08-01T04:56:50.686686+00:00",
+    "captured_at": "2026-08-01T11:50:14.791472+00:00",
     "commands": [
       {
         "command": "uv run pytest tests/test_release_readiness.py -q",
         "exit_code": 1,
-        "output_tail": "        the built-in open() function does.\n        \"\"\"\n        if \"b\" not in mode:\n            encoding = io.text_encoding(encoding)\n>       return io.open(self, mode, buffering, encoding, errors, newline)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/home/atomrem/projects/codefrost-dev/maid-validator-csharp/.github/workflows/ci.yml'\n\n../../../.local/share/uv/python/cpython-3.14.3-linux-x86_64-gnu/lib/python3.14/pathlib/__init__.py:771: FileNotFoundError\n=========================== short test summary info ============================\nFAILED tests/test_release_readiness.py::test_project_metadata_is_ready_for_first_pypi_release\nFAILED tests/test_release_readiness.py::test_release_uses_only_published_maid_runner_sources\nFAILED tests/test_release_readiness.py::test_release_documentation_covers_license_history_and_operator_steps\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n4 failed in 0.06s\n\n   Building maid-validator-csharp @ file:///home/atomrem/projects/codefrost-dev/maid-validator-csharp\n      Built maid-validator-csharp @ file:///home/atomrem/projects/codefrost-dev/maid-validator-csharp\nUninstalled 2 packages in 6ms\nInstalled 2 packages in 0.79ms",
+        "output_tail": "=================================== FAILURES ===================================\n_____________ test_ci_and_publish_workflows_enforce_release_gates ______________\n\n    def test_ci_and_publish_workflows_enforce_release_gates() -> None:\n        ci = (ROOT / \".github/workflows/ci.yml\").read_text()\n        publish = (ROOT / \".github/workflows/publish.yml\").read_text()\n    \n        for version in (\"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\"):\n            assert version in ci\n        assert \"uv sync --locked\" in ci\n        assert \"working-directory: maid-validator-csharp\" in ci\n        assert \"path: maid-validator-csharp\" in ci\n        assert \"repository: mamertofabian/maid-runner\" in ci\n>       assert f\"ref: {RUNNER_CONTRACT_COMMIT}\" in ci\nE       AssertionError: assert 'ref: f251bd5c6530cfe4d9be84b05dc59d488aa8940e' in 'name: CI\\n\\non:\\n  push:\\n    branches: [main]\\n  pull_request:\\n\\npermissions:\\n  contents: read\\n\\nconcurrency:\\n  .../\\n      - name: Validate MAID contracts\\n        run: |\\n          uv run maid validate\\n          uv run maid test\\n'\n\ntests/test_release_readiness.py:86: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n1 failed, 4 passed in 0.01s",
         "classification": "red"
       },
       {
         "command": "uv run pytest tests/ -q",
         "exit_code": 1,
-        "output_tail": "\n    def open(self, mode='r', buffering=-1, encoding=None,\n             errors=None, newline=None):\n        \"\"\"\n        Open the file pointed to by this path and return a file object, as\n        the built-in open() function does.\n        \"\"\"\n        if \"b\" not in mode:\n            encoding = io.text_encoding(encoding)\n>       return io.open(self, mode, buffering, encoding, errors, newline)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       FileNotFoundError: [Errno 2] No such file or directory: '/home/atomrem/projects/codefrost-dev/maid-validator-csharp/.github/workflows/ci.yml'\n\n../../../.local/share/uv/python/cpython-3.14.3-linux-x86_64-gnu/lib/python3.14/pathlib/__init__.py:771: FileNotFoundError\n=========================== short test summary info ============================\nFAILED tests/test_release_readiness.py::test_project_metadata_is_ready_for_first_pypi_release\nFAILED tests/test_release_readiness.py::test_release_uses_only_published_maid_runner_sources\nFAILED tests/test_release_readiness.py::test_release_documentation_covers_license_history_and_operator_steps\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n4 failed, 58 passed in 0.15s",
+        "output_tail": "_____________ test_ci_and_publish_workflows_enforce_release_gates ______________\n\n    def test_ci_and_publish_workflows_enforce_release_gates() -> None:\n        ci = (ROOT / \".github/workflows/ci.yml\").read_text()\n        publish = (ROOT / \".github/workflows/publish.yml\").read_text()\n    \n        for version in (\"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\"):\n            assert version in ci\n        assert \"uv sync --locked\" in ci\n        assert \"working-directory: maid-validator-csharp\" in ci\n        assert \"path: maid-validator-csharp\" in ci\n        assert \"repository: mamertofabian/maid-runner\" in ci\n>       assert f\"ref: {RUNNER_CONTRACT_COMMIT}\" in ci\nE       AssertionError: assert 'ref: f251bd5c6530cfe4d9be84b05dc59d488aa8940e' in 'name: CI\\n\\non:\\n  push:\\n    branches: [main]\\n  pull_request:\\n\\npermissions:\\n  contents: read\\n\\nconcurrency:\\n  .../\\n      - name: Validate MAID contracts\\n        run: |\\n          uv run maid validate\\n          uv run maid test\\n'\n\ntests/test_release_readiness.py:86: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_overload_signatures.py::test_ci_pins_the_runner_exact_signature_contract\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n2 failed, 116 passed in 0.13s",
         "classification": "red"
       },
       {
@@ -198,9 +246,16 @@
       {
         "command": "uv run black --check src/ tests/",
         "exit_code": 0,
-        "output_tail": "Warning: Python 3.14 cannot parse code formatted for Python 3.15. To fix this: run Black with Python 3.15, set --target-version to py314, or use --fast to skip the safety check. Black's safety check verifies equivalence by parsing the AST, which fails when the running Python is older than the target version.\nAll done! \u2728 \ud83c\udf70 \u2728\n12 files would be left unchanged.",
+        "output_tail": "Warning: Python 3.14 cannot parse code formatted for Python 3.15. To fix this: run Black with Python 3.15, set --target-version to py314, or use --fast to skip the safety check. Black's safety check verifies equivalence by parsing the AST, which fails when the running Python is older than the target version.\nAll done! \u2728 \ud83c\udf70 \u2728\n15 files would be left unchanged.",
         "classification": "not_red"
       }
+    ],
+    "sibling_dirty_paths": [
+      ".maid/plan-locks/distinguish-csharp-overloads.lock.json",
+      ".maid/plan-locks/normalize-csharp-types.lock.json",
+      "manifests/distinguish-csharp-overloads.manifest.yaml",
+      "src/maid_validator_csharp/_implementation.py",
+      "tests/test_overload_signatures.py"
     ]
   },
   "legacy_baseline": null,
@@ -309,6 +364,7 @@
       "tests/test_implementation.py",
       "tests/test_internals.py",
       "tests/test_namespace_behavioral.py",
+      "tests/test_overload_signatures.py",
       "tests/test_release_readiness.py",
       "tests/test_type_normalization.py"
     ],

@@ -8,7 +8,7 @@ except ModuleNotFoundError:  # pragma: no cover - exercised by the Python 3.10 C
     import tomli as tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
-RUNNER_TYPE_HOOK_COMMIT = "170545963d7c4509e6f905325b5bb79b5da513fa"
+RUNNER_CONTRACT_COMMIT = "f251bd5c6530cfe4d9be84b05dc59d488aa8940e"
 
 
 def _project_config() -> dict:
@@ -83,7 +83,7 @@ def test_ci_and_publish_workflows_enforce_release_gates() -> None:
     assert "working-directory: maid-validator-csharp" in ci
     assert "path: maid-validator-csharp" in ci
     assert "repository: mamertofabian/maid-runner" in ci
-    assert f"ref: {RUNNER_TYPE_HOOK_COMMIT}" in ci
+    assert f"ref: {RUNNER_CONTRACT_COMMIT}" in ci
     assert "path: maid-runner" in ci
     assert "cache-dependency-glob: maid-validator-csharp/uv.lock" in ci
     assert "uv run pytest -q" in ci

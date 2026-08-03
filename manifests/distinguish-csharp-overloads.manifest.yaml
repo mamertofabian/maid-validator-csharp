@@ -1,0 +1,269 @@
+# draft-kind: implementation
+# MAID manifest - a machine-checked contract for one change.
+# Declares the intent, the files it may touch, and the commands that verify it.
+# Nothing here is needed to build or run this project; safe to ignore.
+# What it is: https://github.com/mamertofabian/maid-runner
+schema: "2"
+goal: "Emit exact canonical signatures for C# callable definitions without guessing
+  syntax-only call targets"
+type: feature
+created: "2026-08-01T11:10:50Z"
+metadata:
+  sequence: "csharp-093-03"
+  parent_epic: resolve-csharp-validator-limitations
+  runner_contract: "f251bd5c6530cfe4d9be84b05dc59d488aa8940e"
+  tags:
+    - csharp
+    - overloads
+    - validator-plugin
+    - exact-identity
+  priority: high
+description: |
+  Add a plugin-owned exact signature to every collected C# method,
+  constructor, and top-level function definition. The signature uses the
+  callable name, method generic arity, and canonical parameter types while
+  excluding return types, parameter names, and defaults. `ref`, `in`, and
+  `out` share one by-reference identity because C# does not permit overloads
+  that differ only among those modifiers; `params` preserves its array type
+  but does not create a distinct modifier identity. Explicit-interface
+  definitions include their interface qualifier, and the C# varargs sentinel
+  remains distinct from an empty parameter list.
+
+  This is an additive chain evolution of the existing implementation collector
+  contract: its public Python signature and raw `args`/`returns` spellings stay
+  unchanged. Exact identity is emitted only for definitions, whose parameter
+  syntax is unambiguous. Tree-sitter behavioral calls, receiver bindings, and
+  `nameof` references remain signatureless because argument count and visible
+  syntax cannot resolve overload selection safely. Roslyn-backed exact call
+  binding remains a later child.
+
+  CI advances its adjacent Runner checkout from the type-hook contract to the
+  exact-artifact-signature contract. The published dependency lower bound is
+  intentionally unchanged until that Runner contract has a release and the
+  separate release-preparation workflow removes the editable source override.
+temptations:
+  - risk: "Do not put parameter names, defaults, or return types into overload identity."
+    instead: "Build signatures only from callable name, generic arity, canonical parameter
+      types, and C# by-reference identity."
+  - risk: "Do not distinguish ref, in, and out, treat params as a modifier, or collapse
+      explicit-interface and __arglist identities."
+    instead: "Collapse ref/in/out to one ref marker and retain only the params parameter's
+      canonical array type; qualify explicit implementations and serialize __arglist."
+  - risk: "Do not infer behavioral signatures from argument count, literals, variable
+      names, or local receiver guesses."
+    instead: "Leave every syntax-only function, method, and nameof reference signature
+      unset until the Roslyn bridge supplies symbol evidence."
+  - risk: "Do not rewrite raw args or returns to their canonical spellings."
+    instead: "Use normalize_csharp_type only for the opaque signature while preserving
+      current snapshot and diagnostic values."
+  - risk: "Do not let local editable Runner success hide a stale hosted-CI contract."
+    instead: "Pin CI to the exact Runner commit that introduces FoundArtifact.signature
+      and assert the full SHA in release-readiness coverage."
+files:
+  create:
+    - path: tests/test_overload_signatures.py
+      artifacts:
+        - kind: test_function
+          name: test_overloaded_definitions_emit_distinct_canonical_signatures
+          source_scenario: "Two public C# methods share a name and owner but accept
+            int and string."
+          actions:
+            - type: api_call
+              subject:
+                function: collect_implementation_artifacts
+          expected:
+            behavior: "Definitions retain raw parameter/return spellings while exposing
+              distinct System.Int32 and System.String exact signatures and contract
+              keys."
+        - kind: test_function
+          name: test_signature_uses_generic_arity_and_by_reference_identity
+          source_scenario: "Generic, by-value, ref, in, and out methods exercise C#
+            overload identity rules."
+          actions:
+            - type: api_call
+              subject:
+                function: collect_implementation_artifacts
+          expected:
+            behavior: "Generic arity is explicit; parameter names/defaults/returns
+              are absent; ref/in/out share a ref marker while value parameters remain
+              distinct."
+        - kind: test_function
+          name: 
+            test_params_constructors_and_top_level_functions_keep_parameter_types
+          source_scenario: "A params method, constructor, and top-level function expose
+            callable signatures."
+          actions:
+            - type: api_call
+              subject:
+                function: collect_implementation_artifacts
+          expected:
+            behavior: "All callable forms emit canonical parameter signatures, and
+              params object[] remains present in raw args and exact identity."
+        - kind: test_function
+          name: test_explicit_interface_definitions_keep_interface_identity
+          source_scenario: "One class implements two same-shaped interface methods
+            explicitly."
+          actions:
+            - type: api_call
+              subject:
+                function: collect_implementation_artifacts
+            - type: api_call
+              subject:
+                function: compare_artifacts
+          expected:
+            behavior: "The two definitions retain raw method name and owner but expose
+              distinct canonical interface-qualified signatures and exact Runner
+              contract keys."
+        - kind: test_function
+          name: test_arglist_is_distinct_from_an_empty_parameter_list
+          source_scenario: "A class declares both an empty method and a C# varargs
+            method with the same name."
+          actions:
+            - type: api_call
+              subject:
+                function: collect_implementation_artifacts
+          expected:
+            behavior: "The empty and __arglist definitions expose different exact
+              signatures while the raw varargs sentinel remains collected."
+        - kind: test_function
+          name: test_exact_runner_matching_selects_the_requested_csharp_overload
+          source_scenario: "Runner compares one signed C# manifest method against
+            two collected overloads."
+          actions:
+            - type: api_call
+              subject:
+                function: compare_artifacts
+          expected:
+            behavior: "The equal exact signature selects its overload and an absent
+              signature produces E300 rather than falling back by name."
+        - kind: test_function
+          name: test_syntax_only_behavioral_references_never_guess_signatures
+          source_scenario: "Static, instance, free, and nameof calls are collected
+            without compiler binding."
+          actions:
+            - type: api_call
+              subject:
+                function: CSharpValidator.collect_behavioral_artifacts
+          expected:
+            behavior: "Every syntax-only callable reference keeps signature unset
+              even when literals or a receiver make one overload look likely."
+        - kind: test_function
+          name: test_ci_pins_the_runner_exact_signature_contract
+          source_scenario: "Hosted CI provisions the adjacent Runner dependency used
+            by the locked development environment."
+          actions:
+            - type: api_call
+              subject:
+                function: Path.read_text
+          expected:
+            behavior: "CI names and pins the full Runner exact-signature contract
+              commit."
+  edit:
+    - path: src/maid_validator_csharp/_implementation.py
+      artifacts:
+        - kind: function
+          name: collect_implementation_artifacts
+          args:
+            - name: root
+              type: Any
+            - name: source
+              type: bytes
+          returns: "list[FoundArtifact]"
+          description: "Preserves its public API and raw artifacts while adding canonical
+            exact signatures to methods, constructors, and top-level functions."
+  scope:
+    - path: .github/workflows/ci.yml
+      reason: "Advance the reproducible adjacent Runner checkout to the exact-signature
+        contract commit."
+    - path: tests/test_release_readiness.py
+      reason: "Advance the existing hosted-CI Runner pin assertion to the exact-signature
+        contract commit."
+  read:
+    - manifests/csharp-validator-plugin.manifest.yaml
+    - manifests/normalize-csharp-types.manifest.yaml
+    - manifests/drafts/resolve-csharp-validator-limitations.epic.yaml
+    - src/maid_validator_csharp/_behavioral.py
+    - src/maid_validator_csharp/_types.py
+    - src/maid_validator_csharp/validator.py
+    - tests/test_implementation.py
+    - tests/test_behavioral.py
+validate:
+  - uv run pytest tests/test_overload_signatures.py tests/test_implementation.py
+    tests/test_behavioral.py tests/test_release_readiness.py -v
+  - uv run maid validate manifests/distinguish-csharp-overloads.manifest.yaml 
+    --mode behavioral --quiet
+  - uv run maid validate manifests/distinguish-csharp-overloads.manifest.yaml 
+    --mode schema --quiet
+outcome:
+  status: completed
+  completed_at: "2026-08-01T19:57:32+08:00"
+  summary: "Added exact canonical definition signatures for C# overloads while preserving
+    raw source spellings and leaving syntax-only behavioral references unsigned."
+  rationale: "Tree-sitter provides unambiguous definition parameter syntax but cannot
+    bind call targets. Definition signatures therefore encode callable identity,
+    generic arity, canonical parameter types, by-reference identity, explicit-interface
+    qualification, and __arglist without guessing behavioral overloads. Hosted CI
+    advances to the exact reviewed Runner contract, while publication remains blocked
+    until that contract is released and its dependency floor can be raised."
+  lessons:
+    - lesson_type: design
+      summary: "C# exact callable identity must include explicit-interface qualification
+        and the __arglist sentinel; name, owner, and ordinary parameter types alone
+        still permit valid definition collisions."
+      tags: [csharp, overloads, exact-identity, tree-sitter]
+      paths:
+        - src/maid_validator_csharp/_implementation.py
+        - tests/test_overload_signatures.py
+    - lesson_type: validation
+      summary: "Grammar-backed edge cases exposed collisions that the initial happy-path
+        overload matrix missed; independent review added executable coverage before
+        the implementation was accepted."
+      tags: [maid-workflow, independent-review, behavioral-tests]
+      paths:
+        - tests/test_overload_signatures.py
+        - .maid/plan-locks/distinguish-csharp-overloads.lock.json
+    - lesson_type: workflow
+      summary: "When an additive child updates a shared full-suite behavioral file,
+        every active lock hashing that file needs an explicit stash-backed evidence
+        refresh rather than a silent hash rewrite."
+      tags: [maid-workflow, plan-lock, shared-tests]
+      paths:
+        - .maid/plan-locks/normalize-csharp-types.lock.json
+        - .maid/plan-locks/prepare-pypi-release.lock.json
+  review_notes:
+    - source: independent-review-round-1
+      severity: needs-changes
+      summary: "Found explicit-interface and __arglist signature collisions and flagged
+        the local-only Runner SHA as an unavailable hosted-CI prerequisite."
+    - source: independent-review-round-2
+      severity: ready
+      summary: "Confirmed both collector collisions were fixed with exact matching and
+        contract-key coverage; no P0/P1/P2 implementation findings remained."
+    - source: external-prerequisite
+      severity: advisory
+      summary: "Runner commit f251bd5 is local-only, so hosted CI cannot fetch the pinned
+        contract until a separately authorized Runner push occurs."
+  validation:
+    - command: [uv, run, pytest, tests/test_overload_signatures.py, -q]
+      status: passed
+      summary: "All eight exact overload, interface, varargs, conservative-reference,
+        and CI-pin scenarios passed."
+    - command: [uv, run, pytest, -q]
+      status: passed
+      summary: "The full 118-test plugin suite passed."
+    - command: [uv, run, ruff, check, src/, tests/]
+      status: passed
+      summary: "All source and test lint checks passed."
+    - command: [uv, run, black, --check, src/, tests/]
+      status: passed
+      summary: "All 15 source and test files were correctly formatted."
+    - command: [uv, run, maid, validate]
+      status: passed
+      summary: "All six active MAID manifests passed validation."
+    - command: [uv, run, maid, test]
+      status: passed
+      summary: "All seven consolidated MAID behavioral command groups passed."
+    - command: [uv, run, maid, verify, --summary, --require-plan-lock,
+        --require-red-evidence, --since, dacc103]
+      status: passed
+      summary: "All nine strict handoff stages passed with zero warnings."

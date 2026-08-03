@@ -1,0 +1,359 @@
+{
+  "manifest_path": "manifests/distinguish-csharp-overloads.manifest.yaml",
+  "manifest_hash": "sha256-contract:0bbb77add070ac41fff6825e9444e1d73297c827276f11a834209abf51f3efcd",
+  "test_hashes": {
+    "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+    "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+    "tests/test_overload_signatures.py": "sha256-pyast:v2:d9ae42c56c34ad4aa1791eccdb5c521c758876ce438ccc4379221299f65597e8",
+    "tests/test_release_readiness.py": "sha256-pyast:v2:f3abae2cfdef2a2f8d514e9bbea0899da10ac0acb6804d233952fbd3745e2509"
+  },
+  "created_at": "2026-08-01T11:11:03.455907+00:00",
+  "revision": 4,
+  "revisions": [
+    {
+      "prior_manifest_hash": "sha256-contract:06fac5a047994758d33fcbf02fad39299b26ebf760bafbb037408802980ddcd1",
+      "prior_test_hashes": {
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_release_readiness.py": "sha256-pyast:v2:dc7034fdecae5d050af60842b26c6aeb053c0a1f45df4f066d561d2b2c162bb1",
+        "tests/test_overload_signatures.py": "sha256-pyast:v2:c07df6a2f7ef1cbc7f230fc839721526287a2dcf0ba3217476cf805c0506693c"
+      },
+      "revised_at": "2026-08-01T11:40:44.014041+00:00",
+      "reason": "Include the existing release-readiness Runner pin assertion required by the approved CI contract",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [
+          "scope:tests/test_release_readiness.py"
+        ],
+        "files_removed": [
+          "read:tests/test_release_readiness.py"
+        ],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:14e02a5a5711dbda0379a3f1e4f53186972a5ec4e8224699c475e60ba0f3f5c3",
+      "prior_test_hashes": {
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_overload_signatures.py": "sha256-pyast:v2:c07df6a2f7ef1cbc7f230fc839721526287a2dcf0ba3217476cf805c0506693c",
+        "tests/test_release_readiness.py": "sha256-pyast:v2:f3abae2cfdef2a2f8d514e9bbea0899da10ac0acb6804d233952fbd3745e2509"
+      },
+      "revised_at": "2026-08-01T11:49:11.342574+00:00",
+      "reason": "Independent review found explicit-interface and __arglist signature collisions; tighten exact-identity coverage",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [
+          "tests/test_overload_signatures.py:test_arglist_is_distinct_from_an_empty_parameter_list",
+          "tests/test_overload_signatures.py:test_arglist_is_distinct_from_an_empty_parameter_list:kind=test_function",
+          "tests/test_overload_signatures.py:test_explicit_interface_definitions_keep_interface_identity",
+          "tests/test_overload_signatures.py:test_explicit_interface_definitions_keep_interface_identity:kind=test_function"
+        ],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:0bbb77add070ac41fff6825e9444e1d73297c827276f11a834209abf51f3efcd",
+      "prior_test_hashes": {
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_overload_signatures.py": "sha256-pyast:v2:d9ae42c56c34ad4aa1791eccdb5c521c758876ce438ccc4379221299f65597e8",
+        "tests/test_release_readiness.py": "sha256-pyast:v2:f3abae2cfdef2a2f8d514e9bbea0899da10ac0acb6804d233952fbd3745e2509"
+      },
+      "revised_at": "2026-08-01T11:58:11.285762+00:00",
+      "reason": "Capture the reviewed implementation Outcome and validation evidence",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    }
+  ],
+  "red_evidence": {
+    "red": true,
+    "captured_at": "2026-08-01T11:49:11.932873+00:00",
+    "commands": [
+      {
+        "command": "uv run pytest tests/test_overload_signatures.py tests/test_implementation.py tests/test_behavioral.py tests/test_release_readiness.py -v",
+        "exit_code": 1,
+        "output_tail": "        for version in (\"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\"):\n            assert version in ci\n        assert \"uv sync --locked\" in ci\n        assert \"working-directory: maid-validator-csharp\" in ci\n        assert \"path: maid-validator-csharp\" in ci\n        assert \"repository: mamertofabian/maid-runner\" in ci\n>       assert f\"ref: {RUNNER_CONTRACT_COMMIT}\" in ci\nE       assert 'ref: f251bd5c6530cfe4d9be84b05dc59d488aa8940e' in 'name: CI\\n\\non:\\n  push:\\n    branches: [main]\\n  pull_request:\\n\\npermissions:\\n  contents: read\\n\\nconcurrency:\\n  group: ci-${{ github.ref }}\\n  cancel-in-progress: true\\n\\njobs:\\n  test:\\n    name: Python ${{ matrix.python-version }}\\n    runs-on: ubuntu-latest\\n    defaults:\\n      run:\\n        working-directory: maid-validator-csharp\\n    strategy:\\n      fail-fast: false\\n      matrix:\\n        python-version: [\"3.10\", \"3.11\", \"3.12\", \"3.13\", \"3.14\"]\\n\\n    steps:\\n      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4\\n        with:\\n          path: maid-validator-csharp\\n          persist-credentials: false\\n      - name: Check out MAID Runner type-hook contract\\n        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4\\n        with:\\n          repository: mamertofabian/maid-runner\\n          ref: 170545963d7c4509e6f905325b5bb79b5da513fa\\n          path: maid-runner\\n          persist-credentials: false\\n      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6\\n        with:\\n          enable-cache: true\\n          cache-dependency-glob: maid-validator-csharp/uv.lock\\n          python-version: ${{ matrix.python-version }}\\n      - name: Install locked dependencies\\n        run: uv sync --locked\\n      - name: Run tests\\n        run: uv run pytest -q\\n      - name: Run lint\\n        run: uv run ruff check src/ tests/\\n      - name: Check formatting\\n        run: uv run black --check src/ tests/\\n      - name: Validate MAID contracts\\n        run: |\\n          uv run maid validate\\n          uv run maid test\\n'\n\ntests/test_release_readiness.py:86: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_overload_signatures.py::test_overloaded_definitions_emit_distinct_canonical_signatures\nFAILED tests/test_overload_signatures.py::test_signature_uses_generic_arity_and_by_reference_identity\nFAILED tests/test_overload_signatures.py::test_params_constructors_and_top_level_functions_keep_parameter_types\nFAILED tests/test_overload_signatures.py::test_explicit_interface_definitions_keep_interface_identity\nFAILED tests/test_overload_signatures.py::test_arglist_is_distinct_from_an_empty_parameter_list\nFAILED tests/test_overload_signatures.py::test_exact_runner_matching_selects_the_requested_csharp_overload\nFAILED tests/test_overload_signatures.py::test_ci_pins_the_runner_exact_signature_contract\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n========================= 8 failed, 26 passed in 0.11s =========================",
+        "classification": "red"
+      },
+      {
+        "command": "uv run maid validate manifests/distinguish-csharp-overloads.manifest.yaml --mode behavioral --quiet",
+        "exit_code": 0,
+        "output_tail": "",
+        "classification": "not_red"
+      },
+      {
+        "command": "uv run maid validate manifests/distinguish-csharp-overloads.manifest.yaml --mode schema --quiet",
+        "exit_code": 0,
+        "output_tail": "",
+        "classification": "not_red"
+      }
+    ],
+    "sibling_dirty_paths": [
+      ".maid/plan-locks/normalize-csharp-types.lock.json",
+      ".maid/plan-locks/prepare-pypi-release.lock.json"
+    ]
+  },
+  "legacy_baseline": null,
+  "agent": null,
+  "_manifest_contract": {
+    "artifacts": [
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:arg=root:type=Any:default=None",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:arg=source:type=bytes:default=None",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:kind=function",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:returns=list[FoundArtifact]",
+      "tests/test_overload_signatures.py:test_arglist_is_distinct_from_an_empty_parameter_list",
+      "tests/test_overload_signatures.py:test_arglist_is_distinct_from_an_empty_parameter_list:kind=test_function",
+      "tests/test_overload_signatures.py:test_ci_pins_the_runner_exact_signature_contract",
+      "tests/test_overload_signatures.py:test_ci_pins_the_runner_exact_signature_contract:kind=test_function",
+      "tests/test_overload_signatures.py:test_exact_runner_matching_selects_the_requested_csharp_overload",
+      "tests/test_overload_signatures.py:test_exact_runner_matching_selects_the_requested_csharp_overload:kind=test_function",
+      "tests/test_overload_signatures.py:test_explicit_interface_definitions_keep_interface_identity",
+      "tests/test_overload_signatures.py:test_explicit_interface_definitions_keep_interface_identity:kind=test_function",
+      "tests/test_overload_signatures.py:test_overloaded_definitions_emit_distinct_canonical_signatures",
+      "tests/test_overload_signatures.py:test_overloaded_definitions_emit_distinct_canonical_signatures:kind=test_function",
+      "tests/test_overload_signatures.py:test_params_constructors_and_top_level_functions_keep_parameter_types",
+      "tests/test_overload_signatures.py:test_params_constructors_and_top_level_functions_keep_parameter_types:kind=test_function",
+      "tests/test_overload_signatures.py:test_signature_uses_generic_arity_and_by_reference_identity",
+      "tests/test_overload_signatures.py:test_signature_uses_generic_arity_and_by_reference_identity:kind=test_function",
+      "tests/test_overload_signatures.py:test_syntax_only_behavioral_references_never_guess_signatures",
+      "tests/test_overload_signatures.py:test_syntax_only_behavioral_references_never_guess_signatures:kind=test_function"
+    ],
+    "files": {
+      "create": [
+        "tests/test_overload_signatures.py"
+      ],
+      "edit": [
+        "src/maid_validator_csharp/_implementation.py"
+      ],
+      "read": [
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "manifests/drafts/resolve-csharp-validator-limitations.epic.yaml",
+        "manifests/normalize-csharp-types.manifest.yaml",
+        "src/maid_validator_csharp/_behavioral.py",
+        "src/maid_validator_csharp/_types.py",
+        "src/maid_validator_csharp/validator.py",
+        "tests/test_behavioral.py",
+        "tests/test_implementation.py"
+      ],
+      "scope": [
+        ".github/workflows/ci.yml",
+        "tests/test_release_readiness.py"
+      ],
+      "delete": [],
+      "snapshot": []
+    },
+    "file_contract": {
+      "create": [
+        {
+          "path": "tests/test_overload_signatures.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_overloaded_definitions_emit_distinct_canonical_signatures",
+              "source_scenario": "Two public C# methods share a name and owner but accept int and string.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "collect_implementation_artifacts"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Definitions retain raw parameter/return spellings while exposing distinct System.Int32 and System.String exact signatures and contract keys."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_signature_uses_generic_arity_and_by_reference_identity",
+              "source_scenario": "Generic, by-value, ref, in, and out methods exercise C# overload identity rules.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "collect_implementation_artifacts"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Generic arity is explicit; parameter names/defaults/returns are absent; ref/in/out share a ref marker while value parameters remain distinct."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_params_constructors_and_top_level_functions_keep_parameter_types",
+              "source_scenario": "A params method, constructor, and top-level function expose callable signatures.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "collect_implementation_artifacts"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "All callable forms emit canonical parameter signatures, and params object[] remains present in raw args and exact identity."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_explicit_interface_definitions_keep_interface_identity",
+              "source_scenario": "One class implements two same-shaped interface methods explicitly.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "collect_implementation_artifacts"
+                  }
+                },
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "compare_artifacts"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "The two definitions retain raw method name and owner but expose distinct canonical interface-qualified signatures and exact Runner contract keys."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_arglist_is_distinct_from_an_empty_parameter_list",
+              "source_scenario": "A class declares both an empty method and a C# varargs method with the same name.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "collect_implementation_artifacts"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "The empty and __arglist definitions expose different exact signatures while the raw varargs sentinel remains collected."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_exact_runner_matching_selects_the_requested_csharp_overload",
+              "source_scenario": "Runner compares one signed C# manifest method against two collected overloads.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "compare_artifacts"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "The equal exact signature selects its overload and an absent signature produces E300 rather than falling back by name."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_syntax_only_behavioral_references_never_guess_signatures",
+              "source_scenario": "Static, instance, free, and nameof calls are collected without compiler binding.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "CSharpValidator.collect_behavioral_artifacts"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "Every syntax-only callable reference keeps signature unset even when literals or a receiver make one overload look likely."
+              }
+            },
+            {
+              "kind": "test_function",
+              "name": "test_ci_pins_the_runner_exact_signature_contract",
+              "source_scenario": "Hosted CI provisions the adjacent Runner dependency used by the locked development environment.",
+              "actions": [
+                {
+                  "type": "api_call",
+                  "subject": {
+                    "function": "Path.read_text"
+                  }
+                }
+              ],
+              "expected": {
+                "behavior": "CI names and pins the full Runner exact-signature contract commit."
+              }
+            }
+          ]
+        }
+      ],
+      "edit": [
+        {
+          "path": "src/maid_validator_csharp/_implementation.py",
+          "artifacts": [
+            {
+              "kind": "function",
+              "name": "collect_implementation_artifacts",
+              "description": "Preserves its public API and raw artifacts while adding canonical exact signatures to methods, constructors, and top-level functions.",
+              "args": [
+                {
+                  "name": "root",
+                  "type": "Any"
+                },
+                {
+                  "name": "source",
+                  "type": "bytes"
+                }
+              ],
+              "returns": "list[FoundArtifact]"
+            }
+          ]
+        }
+      ],
+      "read": [
+        "manifests/csharp-validator-plugin.manifest.yaml",
+        "manifests/normalize-csharp-types.manifest.yaml",
+        "manifests/drafts/resolve-csharp-validator-limitations.epic.yaml",
+        "src/maid_validator_csharp/_behavioral.py",
+        "src/maid_validator_csharp/_types.py",
+        "src/maid_validator_csharp/validator.py",
+        "tests/test_implementation.py",
+        "tests/test_behavioral.py"
+      ],
+      "scope": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "reason": "Advance the reproducible adjacent Runner checkout to the exact-signature contract commit."
+        },
+        {
+          "path": "tests/test_release_readiness.py",
+          "reason": "Advance the existing hosted-CI Runner pin assertion to the exact-signature contract commit."
+        }
+      ]
+    },
+    "test_files": [
+      "tests/test_behavioral.py",
+      "tests/test_implementation.py",
+      "tests/test_overload_signatures.py",
+      "tests/test_release_readiness.py"
+    ],
+    "validate_commands": [
+      "uv run pytest tests/test_overload_signatures.py tests/test_implementation.py tests/test_behavioral.py tests/test_release_readiness.py -v",
+      "uv run maid validate manifests/distinguish-csharp-overloads.manifest.yaml --mode behavioral --quiet",
+      "uv run maid validate manifests/distinguish-csharp-overloads.manifest.yaml --mode schema --quiet"
+    ]
+  }
+}
