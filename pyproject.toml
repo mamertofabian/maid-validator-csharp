@@ -1,6 +1,6 @@
 [project]
 name = "maid-validator-csharp"
-version = "0.1.0"
+version = "0.2.0"
 description = "C# (.cs) language validator plugin for MAID Runner, backed by tree-sitter-c-sharp."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -24,7 +24,8 @@ classifiers = [
     "Topic :: Software Development :: Quality Assurance",
 ]
 dependencies = [
-    "maid-runner>=2.17,<3",
+    "maid-runner>=2.24,<3",
+    'tomli>=2; python_version < "3.11"',
     "tree-sitter>=0.25.0",
     "tree-sitter-c-sharp>=0.23.1",
 ]
@@ -45,9 +46,6 @@ dev = [
     "ruff>=0.13.0",
     "tomli>=2.0.0; python_version < '3.11'",
 ]
-
-[tool.uv.sources]
-maid-runner = { path = "../maid-runner", editable = true }
 
 [build-system]
 requires = ["setuptools==83.0.0", "wheel==0.47.0"]

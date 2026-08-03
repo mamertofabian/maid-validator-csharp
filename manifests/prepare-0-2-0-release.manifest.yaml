@@ -1,0 +1,274 @@
+# draft-kind: implementation
+# MAID manifest - a machine-checked contract for one change.
+# Declares the intent, the files it may touch, and the commands that verify it.
+# Nothing here is needed to build or run this project; safe to ignore.
+# What it is: https://github.com/mamertofabian/maid-runner
+schema: "2"
+goal: "Prepare maid-validator-csharp 0.2.0 for publication against the released MAID
+  Runner exact-signature contract"
+type: feature
+created: "2026-08-03T01:35:39Z"
+supersedes:
+  - prepare-pypi-release
+  - normalize-csharp-types
+  - distinguish-csharp-overloads
+metadata:
+  release_version: "0.2.0"
+  runner_floor: "2.24.0"
+  tags:
+    - release
+    - pypi
+    - csharp
+    - type-normalization
+    - overloads
+  priority: high
+description: |
+  Prepare the first minor release after 0.1.0. Version 0.2.0 is appropriate
+  because C#-aware type comparison and exact callable definition signatures
+  are backward-compatible validator capabilities rather than fixes to the
+  original package metadata alone.
+
+  MAID Runner 2.24.0 is published on PyPI and contains both required plugin
+  contracts: BaseValidator.types_match and optional exact function/method
+  signatures. Raise the package floor to 2.24, remove the development-only
+  adjacent source, and relock exclusively from package indexes. CI must then
+  exercise the same published dependency graph instead of checking out a
+  sibling Runner repository.
+
+  This manifest supersedes the initial-release, type-normalization, and
+  overload-definition manifests because their active behavioral contracts
+  require 0.1.0 metadata or adjacent unreleased Runner wiring that must stop
+  existing for publication. The replacement keeps the complete public type
+  normalization and overload contracts, updates release-readiness behavior,
+  and preserves OIDC publishing, tag/version equality, main ancestry, wheel
+  discovery, and supported Python coverage.
+temptations:
+  - risk: "Do not publish 0.2.0 while pyproject or uv.lock can resolve ../maid-runner
+      or a Runner older than 2.24."
+    instead: "Set maid-runner>=2.24,<3, remove the entire tool.uv.sources table, refresh
+      the lock from indexes, and test minimum plus latest allowed resolution."
+  - risk: "Do not weaken or discard the existing C# type-normalization and overload
+      behavioral matrices while superseding their development wiring."
+    instead: "Redeclare every surviving public artifact and keep both focused suites
+      in the replacement validation commands."
+  - risk: "Do not bypass tag/version equality, main ancestry, OIDC trusted publishing,
+      or installed-wheel discovery to make the release faster."
+    instead: "Preserve the hardened publish workflow and verify its permissions, environment,
+      action pins, and discovery smoke test."
+  - risk: "Do not build from a stale dist directory or treat an editable install as
+      package evidence."
+    instead: "Build into a fresh temporary directory, require exactly one wheel and
+      one sdist, check both, and install the wheel in fresh environments."
+  - risk: "Do not assume an available version or prior trusted-publisher success proves
+      current release safety."
+    instead: "Recheck PyPI, tags, remote main, CI, GitHub environment controls, and
+      public installation at the release checkpoints."
+files:
+  edit:
+    - path: src/maid_validator_csharp/_types.py
+      artifacts:
+        - kind: function
+          name: normalize_csharp_type
+          args:
+            - name: type_str
+              type: "Optional[str]"
+          returns: "Optional[str]"
+        - kind: function
+          name: csharp_types_match
+          args:
+            - name: manifest_type
+              type: "Optional[str]"
+            - name: implementation_type
+              type: "Optional[str]"
+          returns: bool
+    - path: src/maid_validator_csharp/validator.py
+      artifacts:
+        - kind: class
+          name: CSharpValidator
+          bases:
+            - BaseValidator
+        - kind: method
+          name: types_match
+          of: CSharpValidator
+          args:
+            - name: manifest_type
+              type: "Optional[str]"
+            - name: implementation_type
+              type: "Optional[str]"
+          returns: bool
+    - path: src/maid_validator_csharp/_implementation.py
+      artifacts:
+        - kind: function
+          name: collect_implementation_artifacts
+          args:
+            - name: root
+              type: Any
+            - name: source
+              type: bytes
+          returns: "list[FoundArtifact]"
+    - path: tests/test_type_normalization.py
+      artifacts:
+        - kind: test_function
+          name: test_equivalent_csharp_type_spellings_match
+        - kind: test_function
+          name: test_distinct_csharp_type_spellings_do_not_match
+        - kind: test_function
+          name: test_unspecified_manifest_type_preserves_runner_semantics
+        - kind: test_function
+          name: 
+            test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing
+        - kind: test_function
+          name: test_collected_and_snapshot_type_spellings_remain_raw
+        - kind: test_function
+          name: test_validation_engine_accepts_nested_csharp_alias_equivalence
+        - kind: test_function
+          name: test_missing_runner_type_hook_fails_visibly
+    - path: tests/test_overload_signatures.py
+      artifacts:
+        - kind: test_function
+          name: test_overloaded_definitions_emit_distinct_canonical_signatures
+        - kind: test_function
+          name: test_signature_uses_generic_arity_and_by_reference_identity
+        - kind: test_function
+          name: 
+            test_params_constructors_and_top_level_functions_keep_parameter_types
+        - kind: test_function
+          name: test_explicit_interface_definitions_keep_interface_identity
+        - kind: test_function
+          name: test_arglist_is_distinct_from_an_empty_parameter_list
+        - kind: test_function
+          name: test_exact_runner_matching_selects_the_requested_csharp_overload
+        - kind: test_function
+          name: test_syntax_only_behavioral_references_never_guess_signatures
+    - path: tests/test_release_readiness.py
+      artifacts:
+        - kind: test_function
+          name: test_project_metadata_is_ready_for_0_2_0_release
+        - kind: test_function
+          name: test_release_uses_only_published_maid_runner_sources
+        - kind: test_function
+          name: 
+            test_release_documentation_covers_license_history_and_operator_steps
+        - kind: test_function
+          name: test_ci_and_publish_workflows_enforce_release_gates
+  scope:
+    - path: pyproject.toml
+      reason: "Set version 0.2.0, raise the published Runner floor to 2.24, and remove
+        the development-only source override."
+    - path: uv.lock
+      reason: "Relock exclusively from package indexes at the released Runner contract
+        floor."
+    - path: CHANGELOG.md
+      reason: "Publish dated 0.2.0 notes and advance comparison links."
+    - path: README.md
+      reason: "Replace unreleased Runner and overload limitation text with the shipped
+        0.2.0 capabilities and remaining semantic boundaries."
+    - path: RELEASING.md
+      reason: "Record the published Runner 2.24 prerequisite and current 0.2.0 tag
+        example."
+    - path: .github/workflows/ci.yml
+      reason: "Run CI from the root checkout against the locked published dependency
+        graph."
+  read:
+    - manifests/prepare-pypi-release.manifest.yaml
+    - manifests/normalize-csharp-types.manifest.yaml
+    - manifests/distinguish-csharp-overloads.manifest.yaml
+    - manifests/drafts/resolve-csharp-validator-limitations.epic.yaml
+    - .github/workflows/publish.yml
+    - .pre-commit-config.yaml
+    - LICENSE
+    - tests/test_conformance.py
+validate:
+  - uv run pytest tests/test_release_readiness.py 
+    tests/test_type_normalization.py tests/test_overload_signatures.py 
+    tests/test_conformance.py -q
+  - uv run pytest tests/ -q
+  - uv run ruff check src/ tests/
+  - uv run black --check src/ tests/
+  - uv run maid validate manifests/prepare-0-2-0-release.manifest.yaml --mode 
+    behavioral --no-chain --quiet
+  - uv run maid validate manifests/prepare-0-2-0-release.manifest.yaml --mode 
+    schema --no-chain --quiet
+outcome:
+  status: completed
+  completed_at: "2026-08-03T09:46:19+08:00"
+  summary: "Prepared maid-validator-csharp 0.2.0 against the published MAID Runner
+    2.24 contract with registry-only locking, root-checkout CI, documented type
+    normalization and overload behavior, and verified wheel discovery across Python
+    3.10 through 3.14."
+  rationale: "The two backward-compatible validator capabilities justify a minor
+    release. Replacing the adjacent Runner checkout with the published 2.24.0 wheel
+    made the release graph reproducible and exposed Runner's undeclared Python 3.10
+    tomli import; the plugin now declares that conditional compatibility dependency.
+    Publishing remains mediated by the existing tag/version, main-ancestry, installed-wheel,
+    and OIDC workflow gates."
+  lessons:
+    - lesson_type: validation
+      summary: "Install the built wheel on every advertised Python version before
+        release; the Python 3.10 smoke test exposed an undeclared transitive tomli
+        import that source-checkout and latest-Python tests did not reveal."
+      tags: [pypi, wheel, python-3.10, dependency-bounds]
+      paths:
+        - pyproject.toml
+        - tests/test_release_readiness.py
+    - lesson_type: workflow
+      summary: "A release that depended on adjacent unreleased Runner source became
+        publishable only after the Runner contract was released, the lower bound was
+        raised, the source override was removed, and CI exercised the registry lock."
+      tags: [maid-runner, uv-lock, ci, release]
+      paths:
+        - pyproject.toml
+        - uv.lock
+        - .github/workflows/ci.yml
+    - lesson_type: security
+      summary: "OIDC and main-ancestry checks protect the workflow mechanics, but
+        unprotected branches, tags, and environments still leave release authorization
+        dependent on repository-writer discipline."
+      tags: [github-actions, oidc, governance, trusted-publishing]
+      paths:
+        - .github/workflows/publish.yml
+        - RELEASING.md
+  review_notes:
+    - source: independent-review-round-1
+      severity: ready
+      summary: "Found no P0/P1/P2 defects; confirmed manifest scope, registry locking,
+        Python 3.10 compatibility, least-privilege workflow permissions, action pins,
+        and retained behavioral contracts."
+    - source: release-governance
+      severity: advisory
+      summary: "Main, tags, and the pypi environment have no protection rules; add
+        rulesets and an environment approval gate when repository governance permits."
+    - source: workflow-audit
+      severity: advisory
+      summary: "Zizmor 1.29.0 reported no findings in offline mode, so current remote
+        action-advisory metadata was not checked."
+  validation:
+    - command: [uv, run, pytest, -q]
+      status: passed
+      summary: "All 116 repository tests passed."
+    - command: [uv, run, ruff, check, src/, tests/]
+      status: passed
+      summary: "Source and test lint passed."
+    - command: [uv, run, black, --check, src/, tests/]
+      status: passed
+      summary: "All 15 Python files were already formatted; Black emitted only its
+        Python 3.14 versus target 3.15 safety-check warning."
+    - command: [uv, run, maid, verify, --summary, --require-plan-lock,
+        --require-red-evidence, --since, ff07d36]
+      status: passed
+      summary: "All nine strict MAID verification stages passed with no warnings."
+    - command: [uvx, --from, twine==7.0.0, twine, check, wheel, sdist]
+      status: passed
+      summary: "Fresh 0.2.0 wheel and source distribution metadata passed."
+    - command: [isolated-wheel-smoke, python-3.10-through-3.14]
+      status: passed
+      summary: "Fresh wheel installs imported CSharpValidator and discovered the
+        csharp plugin on every supported Python version."
+    - command: [uvx, zizmor==1.29.0, .github/workflows/ci.yml,
+        .github/workflows/publish.yml]
+      status: passed
+      summary: "Offline workflow audit reported no findings."
+    - command: [uvx, --from, pip-audit==2.9.0, pip-audit, -r,
+        exported-runtime-requirements]
+      status: passed
+      summary: "No known runtime dependency vulnerabilities were found."

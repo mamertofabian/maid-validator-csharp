@@ -57,18 +57,16 @@ and identity references for the types (`new Widget()`) and methods
 ## Development
 
 ```bash
-uv sync            # uses the adjacent ../maid-runner checkout
+uv sync            # installs the locked published dependency graph
 uv run pytest -v   # runs the MAID conformance kit + hand-written suites
 uv run ruff check src/ tests/
 uv run black --check src/ tests/
 ```
 
-The current development branch uses MAID Runner's unreleased
-`BaseValidator.types_match` plugin contract. Its `[tool.uv.sources]` entry is
-development-only: the next release must wait for that Runner contract to be
-published, raise the package's Runner lower bound, remove the local source,
-and relock from package indexes. `CSharpValidator` fails visibly when loaded by
-an older Runner instead of silently applying Python-oriented type comparison.
+Version 0.2.0 requires MAID Runner 2.24 or newer. That release provides the
+language-aware type-comparison and exact callable-signature contracts used by
+the plugin. Package and CI resolution use published dependencies; local
+editable Runner checkouts are optional development tooling only.
 
 ## C# type comparison
 
@@ -93,14 +91,21 @@ The [MAID conformance kit](https://github.com/mamertofabian/maid-runner/blob/mai
 (`tests/test_conformance.py`) is the acceptance bar: it proves the collector
 cannot manufacture false-green validation for C#.
 
+## Exact overload definitions
+
+Methods, constructors, and top-level functions expose canonical definition
+signatures so manifests can select an exact overload. Identity includes method
+generic arity, canonical parameter types, C# by-reference semantics,
+explicit-interface qualification, and `__arglist`. Raw argument and return
+spellings remain source-shaped. Syntax-only behavioral calls intentionally stay
+unsigned because tree-sitter cannot bind a call to a compiler-selected overload;
+that semantic path remains reserved for optional Roslyn integration.
+
 See [CHANGELOG.md](CHANGELOG.md) for release history and
 [RELEASING.md](RELEASING.md) for the trusted-publishing procedure.
 
 ## Known limitations
 
-- **Method overloads** collapse on MAID's `method:Type.Name` identity key, so
-  overloaded methods can't be distinguished individually. Declare one
-  representative, or leave `args` unspecified in the manifest.
 - **Semantic type identity:** syntax-level comparison cannot determine whether
   an arbitrary custom type is a value type, resolve aliases/usings, or prove
   compiler-bound identity. Those cases remain exact until the optional Roslyn

@@ -8,19 +8,21 @@ except ModuleNotFoundError:  # pragma: no cover - exercised by the Python 3.10 C
     import tomli as tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
-RUNNER_CONTRACT_COMMIT = "f251bd5c6530cfe4d9be84b05dc59d488aa8940e"
+RELEASE_VERSION = "0.2.0"
+RUNNER_CONTRACT_VERSION = "2.24.0"
 
 
 def _project_config() -> dict:
     return tomllib.loads((ROOT / "pyproject.toml").read_text())
 
 
-def test_project_metadata_is_ready_for_first_pypi_release() -> None:
+def test_project_metadata_is_ready_for_0_2_0_release() -> None:
     project = _project_config()["project"]
 
-    assert project["version"] == "0.1.0"
+    assert project["version"] == RELEASE_VERSION
     assert project["requires-python"] == ">=3.10"
-    assert "maid-runner>=2.17,<3" in project["dependencies"]
+    assert "maid-runner>=2.24,<3" in project["dependencies"]
+    assert 'tomli>=2; python_version < "3.11"' in project["dependencies"]
     assert "tree-sitter>=0.25.0" in project["dependencies"]
     assert project["license"] == "MIT"
     assert project["license-files"] == ["LICENSE"]
@@ -36,23 +38,18 @@ def test_project_metadata_is_ready_for_first_pypi_release() -> None:
 
 def test_release_uses_only_published_maid_runner_sources() -> None:
     config = _project_config()
+    lock = tomllib.loads((ROOT / "uv.lock").read_text())
     releasing = (ROOT / "RELEASING.md").read_text()
+    runner = next(
+        package for package in lock["package"] if package["name"] == "maid-runner"
+    )
 
-    assert "maid-runner>=2.17,<3" in config["project"]["dependencies"]
+    assert "maid-runner>=2.24,<3" in config["project"]["dependencies"]
+    assert "sources" not in config.get("tool", {}).get("uv", {})
+    assert runner["version"] == RUNNER_CONTRACT_VERSION
+    assert runner["source"] == {"registry": "https://pypi.org/simple"}
     assert "BaseValidator.types_match" in releasing
-    assert "remove" in releasing.lower()
-    assert "lower bound" in releasing.lower()
-
-
-def test_development_uses_adjacent_maid_runner_source() -> None:
-    config = _project_config()
-    lock_text = (ROOT / "uv.lock").read_text()
-
-    assert config["tool"]["uv"]["sources"]["maid-runner"] == {
-        "path": "../maid-runner",
-        "editable": True,
-    }
-    assert 'source = { editable = "../maid-runner" }' in lock_text
+    assert RUNNER_CONTRACT_VERSION in releasing
 
 
 def test_release_documentation_covers_license_history_and_operator_steps() -> None:
@@ -63,14 +60,20 @@ def test_release_documentation_covers_license_history_and_operator_steps() -> No
 
     assert "MIT License" in license_text
     assert "Mamerto Fabian Jr." in license_text
-    assert "## [0.1.0] - 2026-08-01" in changelog
+    assert "## [0.2.0] - 2026-08-03" in changelog
+    assert "compare/v0.1.0...v0.2.0" in changelog
+    assert "compare/v0.2.0...HEAD" in changelog
+    assert "type comparison" in changelog.lower()
+    assert "overload" in changelog.lower()
     assert "PyPI Trusted Publisher" in releasing
     assert "maid-validator-csharp" in releasing
-    assert "v0.1.0" in releasing
+    assert "v0.2.0" in releasing
     assert "uv run pytest -q" in releasing
     assert "twine check" in releasing
     assert "CHANGELOG.md" in readme
     assert "RELEASING.md" in readme
+    assert "MAID Runner 2.24" in readme
+    assert "Method overloads** collapse" not in readme
 
 
 def test_ci_and_publish_workflows_enforce_release_gates() -> None:
@@ -80,12 +83,10 @@ def test_ci_and_publish_workflows_enforce_release_gates() -> None:
     for version in ("3.10", "3.11", "3.12", "3.13", "3.14"):
         assert version in ci
     assert "uv sync --locked" in ci
-    assert "working-directory: maid-validator-csharp" in ci
-    assert "path: maid-validator-csharp" in ci
-    assert "repository: mamertofabian/maid-runner" in ci
-    assert f"ref: {RUNNER_CONTRACT_COMMIT}" in ci
-    assert "path: maid-runner" in ci
-    assert "cache-dependency-glob: maid-validator-csharp/uv.lock" in ci
+    assert "working-directory: maid-validator-csharp" not in ci
+    assert "path: maid-validator-csharp" not in ci
+    assert "repository: mamertofabian/maid-runner" not in ci
+    assert "cache-dependency-glob: uv.lock" in ci
     assert "uv run pytest -q" in ci
     assert "uv run ruff check src/ tests/" in ci
     assert "uv run black --check src/ tests/" in ci

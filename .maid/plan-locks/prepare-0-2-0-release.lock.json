@@ -1,0 +1,456 @@
+{
+  "manifest_path": "manifests/prepare-0-2-0-release.manifest.yaml",
+  "manifest_hash": "sha256-contract:4b454e819f03b5d70d27d6863b95b849d2f981e0347c327ae2aa41236031ecaf",
+  "test_hashes": {
+    "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45",
+    "tests/test_overload_signatures.py": "sha256-pyast:v2:31b29aa279dfd100b8590f97244b73c2b17ca9ddeacc03925686fb5f509ceb54",
+    "tests/test_release_readiness.py": "sha256-pyast:v2:1078824d812fb1a174209394ed620f9c57ec28aa9f4bf28c9986f8d4c194a14e",
+    "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+    "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
+    "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+    "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
+    "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d"
+  },
+  "created_at": "2026-08-03T01:35:46.072531+00:00",
+  "revision": 4,
+  "revisions": [
+    {
+      "prior_manifest_hash": "sha256-contract:ba1d8eecb893559dd42519ccdbd3720c108595566f5ee6dd20de531e12d60f8a",
+      "prior_test_hashes": {
+        "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45",
+        "tests/test_overload_signatures.py": "sha256-pyast:v2:31b29aa279dfd100b8590f97244b73c2b17ca9ddeacc03925686fb5f509ceb54",
+        "tests/test_release_readiness.py": "sha256-pyast:v2:b0b71a4585025ce7ea83e85ad93db31569a6e53e586ef48d7dcb23b4209dbfba",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d"
+      },
+      "revised_at": "2026-08-03T01:39:40.791612+00:00",
+      "reason": "Use an explicit tests directory so MAID recognizes the full-suite release gate",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [
+          "uv run pytest tests/ -q"
+        ],
+        "validate_commands_removed": [
+          "uv run pytest -q"
+        ]
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:4b454e819f03b5d70d27d6863b95b849d2f981e0347c327ae2aa41236031ecaf",
+      "prior_test_hashes": {
+        "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45",
+        "tests/test_overload_signatures.py": "sha256-pyast:v2:31b29aa279dfd100b8590f97244b73c2b17ca9ddeacc03925686fb5f509ceb54",
+        "tests/test_release_readiness.py": "sha256-pyast:v2:b0b71a4585025ce7ea83e85ad93db31569a6e53e586ef48d7dcb23b4209dbfba",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d"
+      },
+      "revised_at": "2026-08-03T01:42:29.795848+00:00",
+      "reason": "Require tomli on Python 3.10 after the clean-wheel smoke test exposed maid-runner 2.24.0's undeclared compatibility import",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    },
+    {
+      "prior_manifest_hash": "sha256-contract:4b454e819f03b5d70d27d6863b95b849d2f981e0347c327ae2aa41236031ecaf",
+      "prior_test_hashes": {
+        "tests/test_type_normalization.py": "sha256-pyast:v2:939d8ebee3c5d60120e3412649678e9cf325c373dabe8f4d69b374f47b351a45",
+        "tests/test_overload_signatures.py": "sha256-pyast:v2:31b29aa279dfd100b8590f97244b73c2b17ca9ddeacc03925686fb5f509ceb54",
+        "tests/test_release_readiness.py": "sha256-pyast:v2:1078824d812fb1a174209394ed620f9c57ec28aa9f4bf28c9986f8d4c194a14e",
+        "tests/test_behavioral.py": "sha256-pyast:v2:fdd9ea237b50ade9755aae944735b3ca22a5fd9dad53a0ea85dd125140d517e0",
+        "tests/test_behavioral_identity.py": "sha256-pyast:v2:057b980149e3c167d87a9661cd452b05a2992729b6ea353e359b7ec897f698b7",
+        "tests/test_implementation.py": "sha256-pyast:v2:41445333dcd0ff88bd1148cb9090057b2d112de8502bcc74920c158ded566c10",
+        "tests/test_internals.py": "sha256-pyast:v2:96f63cdeb8fd1cae1506e647cf9395cec9ad575ca2346ca454a073013f460cf2",
+        "tests/test_namespace_behavioral.py": "sha256-pyast:v2:54d44e6f726ebba58b147fd444b337ff208a617f6d9ccd57b267ea4f214f914d"
+      },
+      "revised_at": "2026-08-03T01:46:51.468863+00:00",
+      "reason": "Capture the reviewed release Outcome and validation evidence",
+      "agent": null,
+      "contract_delta": {
+        "artifacts_added": [],
+        "artifacts_removed": [],
+        "files_added": [],
+        "files_removed": [],
+        "validate_commands_added": [],
+        "validate_commands_removed": []
+      }
+    }
+  ],
+  "red_evidence": {
+    "red": true,
+    "captured_at": "2026-08-03T01:42:31.070689+00:00",
+    "commands": [
+      {
+        "command": "uv run pytest tests/test_release_readiness.py tests/test_type_normalization.py tests/test_overload_signatures.py tests/test_conformance.py -q",
+        "exit_code": 1,
+        "output_tail": "        assert \"uv sync --locked\" in ci\n>       assert \"working-directory: maid-validator-csharp\" not in ci\nE       AssertionError: assert 'working-dir...dator-csharp' not in 'name: CI\\n\\... maid test\\n'\nE         \nE         'working-directory: maid-validator-csharp' is contained here:\nE           :\nE                   working-directory: maid-validator-csharp\nE               strategy:\nE                 fail-fast: false\nE                 matrix:...\nE         \nE         ...Full output truncated (31 lines hidden), use '-vv' to show\n\ntests/test_release_readiness.py:86: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_release_readiness.py::test_project_metadata_is_ready_for_0_2_0_release\nFAILED tests/test_release_readiness.py::test_release_uses_only_published_maid_runner_sources\nFAILED tests/test_release_readiness.py::test_release_documentation_covers_license_history_and_operator_steps\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n4 failed, 71 passed in 0.14s",
+        "classification": "red"
+      },
+      {
+        "command": "uv run pytest tests/ -q",
+        "exit_code": 1,
+        "output_tail": "        assert \"uv sync --locked\" in ci\n>       assert \"working-directory: maid-validator-csharp\" not in ci\nE       AssertionError: assert 'working-dir...dator-csharp' not in 'name: CI\\n\\... maid test\\n'\nE         \nE         'working-directory: maid-validator-csharp' is contained here:\nE           :\nE                   working-directory: maid-validator-csharp\nE               strategy:\nE                 fail-fast: false\nE                 matrix:...\nE         \nE         ...Full output truncated (31 lines hidden), use '-vv' to show\n\ntests/test_release_readiness.py:86: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_release_readiness.py::test_project_metadata_is_ready_for_0_2_0_release\nFAILED tests/test_release_readiness.py::test_release_uses_only_published_maid_runner_sources\nFAILED tests/test_release_readiness.py::test_release_documentation_covers_license_history_and_operator_steps\nFAILED tests/test_release_readiness.py::test_ci_and_publish_workflows_enforce_release_gates\n4 failed, 112 passed in 0.18s",
+        "classification": "red"
+      },
+      {
+        "command": "uv run ruff check src/ tests/",
+        "exit_code": 0,
+        "output_tail": "All checks passed!",
+        "classification": "not_red"
+      },
+      {
+        "command": "uv run black --check src/ tests/",
+        "exit_code": 0,
+        "output_tail": "Warning: Python 3.14 cannot parse code formatted for Python 3.15. To fix this: run Black with Python 3.15, set --target-version to py314, or use --fast to skip the safety check. Black's safety check verifies equivalence by parsing the AST, which fails when the running Python is older than the target version.\nAll done! \u2728 \ud83c\udf70 \u2728\n15 files would be left unchanged.",
+        "classification": "not_red"
+      },
+      {
+        "command": "uv run maid validate manifests/prepare-0-2-0-release.manifest.yaml --mode behavioral --no-chain --quiet",
+        "exit_code": 0,
+        "output_tail": "",
+        "classification": "not_red"
+      },
+      {
+        "command": "uv run maid validate manifests/prepare-0-2-0-release.manifest.yaml --mode schema --no-chain --quiet",
+        "exit_code": 0,
+        "output_tail": "",
+        "classification": "not_red"
+      }
+    ]
+  },
+  "legacy_baseline": null,
+  "agent": null,
+  "_manifest_contract": {
+    "artifacts": [
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:arg=root:type=Any:default=None",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:arg=source:type=bytes:default=None",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:kind=function",
+      "src/maid_validator_csharp/_implementation.py:function:collect_implementation_artifacts:returns=list[FoundArtifact]",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match:arg=implementation_type:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match:arg=manifest_type:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match:kind=function",
+      "src/maid_validator_csharp/_types.py:function:csharp_types_match:returns=bool",
+      "src/maid_validator_csharp/_types.py:function:normalize_csharp_type",
+      "src/maid_validator_csharp/_types.py:function:normalize_csharp_type:arg=type_str:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/_types.py:function:normalize_csharp_type:kind=function",
+      "src/maid_validator_csharp/_types.py:function:normalize_csharp_type:returns=Optional[str]",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator:base=BaseValidator",
+      "src/maid_validator_csharp/validator.py:class:CSharpValidator:kind=class",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:arg=implementation_type:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:arg=manifest_type:type=Optional[str]:default=None",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:kind=method",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:of=CSharpValidator",
+      "src/maid_validator_csharp/validator.py:method:CSharpValidator.types_match:returns=bool",
+      "tests/test_overload_signatures.py:test_arglist_is_distinct_from_an_empty_parameter_list",
+      "tests/test_overload_signatures.py:test_arglist_is_distinct_from_an_empty_parameter_list:kind=test_function",
+      "tests/test_overload_signatures.py:test_exact_runner_matching_selects_the_requested_csharp_overload",
+      "tests/test_overload_signatures.py:test_exact_runner_matching_selects_the_requested_csharp_overload:kind=test_function",
+      "tests/test_overload_signatures.py:test_explicit_interface_definitions_keep_interface_identity",
+      "tests/test_overload_signatures.py:test_explicit_interface_definitions_keep_interface_identity:kind=test_function",
+      "tests/test_overload_signatures.py:test_overloaded_definitions_emit_distinct_canonical_signatures",
+      "tests/test_overload_signatures.py:test_overloaded_definitions_emit_distinct_canonical_signatures:kind=test_function",
+      "tests/test_overload_signatures.py:test_params_constructors_and_top_level_functions_keep_parameter_types",
+      "tests/test_overload_signatures.py:test_params_constructors_and_top_level_functions_keep_parameter_types:kind=test_function",
+      "tests/test_overload_signatures.py:test_signature_uses_generic_arity_and_by_reference_identity",
+      "tests/test_overload_signatures.py:test_signature_uses_generic_arity_and_by_reference_identity:kind=test_function",
+      "tests/test_overload_signatures.py:test_syntax_only_behavioral_references_never_guess_signatures",
+      "tests/test_overload_signatures.py:test_syntax_only_behavioral_references_never_guess_signatures:kind=test_function",
+      "tests/test_release_readiness.py:test_ci_and_publish_workflows_enforce_release_gates",
+      "tests/test_release_readiness.py:test_ci_and_publish_workflows_enforce_release_gates:kind=test_function",
+      "tests/test_release_readiness.py:test_project_metadata_is_ready_for_0_2_0_release",
+      "tests/test_release_readiness.py:test_project_metadata_is_ready_for_0_2_0_release:kind=test_function",
+      "tests/test_release_readiness.py:test_release_documentation_covers_license_history_and_operator_steps",
+      "tests/test_release_readiness.py:test_release_documentation_covers_license_history_and_operator_steps:kind=test_function",
+      "tests/test_release_readiness.py:test_release_uses_only_published_maid_runner_sources",
+      "tests/test_release_readiness.py:test_release_uses_only_published_maid_runner_sources:kind=test_function",
+      "tests/test_type_normalization.py:test_collected_and_snapshot_type_spellings_remain_raw",
+      "tests/test_type_normalization.py:test_collected_and_snapshot_type_spellings_remain_raw:kind=test_function",
+      "tests/test_type_normalization.py:test_distinct_csharp_type_spellings_do_not_match",
+      "tests/test_type_normalization.py:test_distinct_csharp_type_spellings_do_not_match:kind=test_function",
+      "tests/test_type_normalization.py:test_equivalent_csharp_type_spellings_match",
+      "tests/test_type_normalization.py:test_equivalent_csharp_type_spellings_match:kind=test_function",
+      "tests/test_type_normalization.py:test_missing_runner_type_hook_fails_visibly",
+      "tests/test_type_normalization.py:test_missing_runner_type_hook_fails_visibly:kind=test_function",
+      "tests/test_type_normalization.py:test_unspecified_manifest_type_preserves_runner_semantics",
+      "tests/test_type_normalization.py:test_unspecified_manifest_type_preserves_runner_semantics:kind=test_function",
+      "tests/test_type_normalization.py:test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing",
+      "tests/test_type_normalization.py:test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing:kind=test_function",
+      "tests/test_type_normalization.py:test_validation_engine_accepts_nested_csharp_alias_equivalence",
+      "tests/test_type_normalization.py:test_validation_engine_accepts_nested_csharp_alias_equivalence:kind=test_function"
+    ],
+    "files": {
+      "create": [],
+      "edit": [
+        "src/maid_validator_csharp/_implementation.py",
+        "src/maid_validator_csharp/_types.py",
+        "src/maid_validator_csharp/validator.py",
+        "tests/test_overload_signatures.py",
+        "tests/test_release_readiness.py",
+        "tests/test_type_normalization.py"
+      ],
+      "read": [
+        ".github/workflows/publish.yml",
+        ".pre-commit-config.yaml",
+        "LICENSE",
+        "manifests/distinguish-csharp-overloads.manifest.yaml",
+        "manifests/drafts/resolve-csharp-validator-limitations.epic.yaml",
+        "manifests/normalize-csharp-types.manifest.yaml",
+        "manifests/prepare-pypi-release.manifest.yaml",
+        "tests/test_conformance.py"
+      ],
+      "scope": [
+        ".github/workflows/ci.yml",
+        "CHANGELOG.md",
+        "README.md",
+        "RELEASING.md",
+        "pyproject.toml",
+        "uv.lock"
+      ],
+      "delete": [],
+      "snapshot": []
+    },
+    "file_contract": {
+      "edit": [
+        {
+          "path": "src/maid_validator_csharp/_types.py",
+          "artifacts": [
+            {
+              "kind": "function",
+              "name": "normalize_csharp_type",
+              "args": [
+                {
+                  "name": "type_str",
+                  "type": "Optional[str]"
+                }
+              ],
+              "returns": "Optional[str]"
+            },
+            {
+              "kind": "function",
+              "name": "csharp_types_match",
+              "args": [
+                {
+                  "name": "manifest_type",
+                  "type": "Optional[str]"
+                },
+                {
+                  "name": "implementation_type",
+                  "type": "Optional[str]"
+                }
+              ],
+              "returns": "bool"
+            }
+          ]
+        },
+        {
+          "path": "src/maid_validator_csharp/validator.py",
+          "artifacts": [
+            {
+              "kind": "class",
+              "name": "CSharpValidator",
+              "bases": [
+                "BaseValidator"
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "types_match",
+              "of": "CSharpValidator",
+              "args": [
+                {
+                  "name": "manifest_type",
+                  "type": "Optional[str]"
+                },
+                {
+                  "name": "implementation_type",
+                  "type": "Optional[str]"
+                }
+              ],
+              "returns": "bool"
+            }
+          ]
+        },
+        {
+          "path": "src/maid_validator_csharp/_implementation.py",
+          "artifacts": [
+            {
+              "kind": "function",
+              "name": "collect_implementation_artifacts",
+              "args": [
+                {
+                  "name": "root",
+                  "type": "Any"
+                },
+                {
+                  "name": "source",
+                  "type": "bytes"
+                }
+              ],
+              "returns": "list[FoundArtifact]"
+            }
+          ]
+        },
+        {
+          "path": "tests/test_type_normalization.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_equivalent_csharp_type_spellings_match"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_distinct_csharp_type_spellings_do_not_match"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_unspecified_manifest_type_preserves_runner_semantics"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_unsupported_csharp_type_syntax_is_deterministic_and_non_crashing"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_collected_and_snapshot_type_spellings_remain_raw"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_validation_engine_accepts_nested_csharp_alias_equivalence"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_missing_runner_type_hook_fails_visibly"
+            }
+          ]
+        },
+        {
+          "path": "tests/test_overload_signatures.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_overloaded_definitions_emit_distinct_canonical_signatures"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_signature_uses_generic_arity_and_by_reference_identity"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_params_constructors_and_top_level_functions_keep_parameter_types"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_explicit_interface_definitions_keep_interface_identity"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_arglist_is_distinct_from_an_empty_parameter_list"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_exact_runner_matching_selects_the_requested_csharp_overload"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_syntax_only_behavioral_references_never_guess_signatures"
+            }
+          ]
+        },
+        {
+          "path": "tests/test_release_readiness.py",
+          "artifacts": [
+            {
+              "kind": "test_function",
+              "name": "test_project_metadata_is_ready_for_0_2_0_release"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_release_uses_only_published_maid_runner_sources"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_release_documentation_covers_license_history_and_operator_steps"
+            },
+            {
+              "kind": "test_function",
+              "name": "test_ci_and_publish_workflows_enforce_release_gates"
+            }
+          ]
+        }
+      ],
+      "read": [
+        "manifests/prepare-pypi-release.manifest.yaml",
+        "manifests/normalize-csharp-types.manifest.yaml",
+        "manifests/distinguish-csharp-overloads.manifest.yaml",
+        "manifests/drafts/resolve-csharp-validator-limitations.epic.yaml",
+        ".github/workflows/publish.yml",
+        ".pre-commit-config.yaml",
+        "LICENSE",
+        "tests/test_conformance.py"
+      ],
+      "scope": [
+        {
+          "path": "pyproject.toml",
+          "reason": "Set version 0.2.0, raise the published Runner floor to 2.24, and remove the development-only source override."
+        },
+        {
+          "path": "uv.lock",
+          "reason": "Relock exclusively from package indexes at the released Runner contract floor."
+        },
+        {
+          "path": "CHANGELOG.md",
+          "reason": "Publish dated 0.2.0 notes and advance comparison links."
+        },
+        {
+          "path": "README.md",
+          "reason": "Replace unreleased Runner and overload limitation text with the shipped 0.2.0 capabilities and remaining semantic boundaries."
+        },
+        {
+          "path": "RELEASING.md",
+          "reason": "Record the published Runner 2.24 prerequisite and current 0.2.0 tag example."
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "reason": "Run CI from the root checkout against the locked published dependency graph."
+        }
+      ]
+    },
+    "test_files": [
+      "tests/test_behavioral.py",
+      "tests/test_behavioral_identity.py",
+      "tests/test_implementation.py",
+      "tests/test_internals.py",
+      "tests/test_namespace_behavioral.py",
+      "tests/test_overload_signatures.py",
+      "tests/test_release_readiness.py",
+      "tests/test_type_normalization.py"
+    ],
+    "validate_commands": [
+      "uv run pytest tests/test_release_readiness.py tests/test_type_normalization.py tests/test_overload_signatures.py tests/test_conformance.py -q",
+      "uv run pytest tests/ -q",
+      "uv run ruff check src/ tests/",
+      "uv run black --check src/ tests/",
+      "uv run maid validate manifests/prepare-0-2-0-release.manifest.yaml --mode behavioral --no-chain --quiet",
+      "uv run maid validate manifests/prepare-0-2-0-release.manifest.yaml --mode schema --no-chain --quiet"
+    ]
+  }
+}

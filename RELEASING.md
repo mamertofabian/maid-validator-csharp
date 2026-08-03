@@ -22,12 +22,12 @@ require approval before the publish job receives its short-lived OIDC token.
 1. Start from a clean, up-to-date `main` branch.
 2. Update `project.version` in `pyproject.toml` and move the release notes from
    `Unreleased` into a dated changelog entry.
-3. Confirm MAID Runner has published the first version containing
-   `BaseValidator.types_match`. Raise the `maid-runner` lower bound in
-   `project.dependencies` to that exact contract version; do not release this
-   feature while the lower bound still permits an older Runner.
-4. Remove the entire development-only `[tool.uv.sources]` table and refresh the
-   lock from package indexes:
+3. Confirm MAID Runner 2.24.0 or newer is published. Version 2.24.0 is the first
+   release containing both `BaseValidator.types_match` and exact callable
+   signatures. Keep the `maid-runner` lower bound at `>=2.24` or newer.
+4. Confirm no development-only `[tool.uv.sources]` table is present. If one was
+   introduced for later development, remove it and refresh the lock from
+   package indexes:
 
    ```bash
    uv lock --refresh
@@ -58,11 +58,11 @@ require approval before the publish job receives its short-lived OIDC token.
    published Runner dependency. This is required in addition to testing the
    editable source checkout.
 8. After the reviewed release commit is on `main`, create and push the matching
-   annotated tag. For the initial release:
+   annotated tag. For release 0.2.0:
 
    ```bash
-   git tag -a v0.1.0 -m "Release maid-validator-csharp 0.1.0"
-   git push origin v0.1.0
+   git tag -a v0.2.0 -m "Release maid-validator-csharp 0.2.0"
+   git push origin v0.2.0
    ```
 
 The publish workflow rejects tags whose commit is not on `main` or whose version

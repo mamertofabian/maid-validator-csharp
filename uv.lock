@@ -132,61 +132,24 @@ wheels = [
 [[package]]
 name = "maid-runner"
 version = "2.24.0"
-source = { editable = "../maid-runner" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonschema" },
     { name = "pyyaml" },
     { name = "ruamel-yaml" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "coverage", marker = "extra == 'all'", specifier = ">=7.0" },
-    { name = "coverage", marker = "extra == 'quality'", specifier = ">=7.0" },
-    { name = "jsonschema", specifier = ">=4.25.1" },
-    { name = "pyyaml", specifier = ">=6.0" },
-    { name = "ruamel-yaml", specifier = ">=0.18.0" },
-    { name = "tree-sitter", marker = "extra == 'all'", specifier = ">=0.23.2" },
-    { name = "tree-sitter", marker = "extra == 'svelte'", specifier = ">=0.23.2" },
-    { name = "tree-sitter", marker = "extra == 'typescript'", specifier = ">=0.23.2" },
-    { name = "tree-sitter-svelte", marker = "extra == 'all'", specifier = ">=1.0.2" },
-    { name = "tree-sitter-svelte", marker = "extra == 'svelte'", specifier = ">=1.0.2" },
-    { name = "tree-sitter-typescript", marker = "extra == 'all'", specifier = ">=0.23.2" },
-    { name = "tree-sitter-typescript", marker = "extra == 'svelte'", specifier = ">=0.23.2" },
-    { name = "tree-sitter-typescript", marker = "extra == 'typescript'", specifier = ">=0.23.2" },
-    { name = "watchdog", marker = "extra == 'watch'", specifier = ">=6.0.0" },
-]
-provides-extras = ["typescript", "svelte", "quality", "all", "watch"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "black", specifier = ">=25.1.0" },
-    { name = "build", specifier = ">=1.0.0" },
-    { name = "mypy", specifier = ">=1.19.1" },
-    { name = "pre-commit", specifier = ">=4.0.0" },
-    { name = "pytest", specifier = ">=8.4.2" },
-    { name = "pytest-cov", specifier = ">=7.0.0" },
-    { name = "ruff", specifier = ">=0.13.0" },
-    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.0.0" },
-    { name = "tree-sitter", specifier = ">=0.23.2" },
-    { name = "tree-sitter-svelte", specifier = ">=1.0.2" },
-    { name = "tree-sitter-typescript", specifier = ">=0.23.2" },
-    { name = "twine", specifier = ">=5.0.0" },
-    { name = "types-pyyaml", specifier = ">=6.0.12.20250915" },
-    { name = "vulture", specifier = ">=2.0" },
-    { name = "watchdog", specifier = ">=6.0.0" },
-]
-docs = [
-    { name = "furo", specifier = ">=2024.8.6" },
-    { name = "sphinx", specifier = ">=7.4.7" },
+sdist = { url = "https://files.pythonhosted.org/packages/d8/55/2968aa428019cc84c5b0aa14df5cae9e12e9c77357c63110957f7cbf102c/maid_runner-2.24.0.tar.gz", hash = "sha256:a8922ddaf8bb8c57ff904aa8eee2e280a0f7275d1170f9f740401213b6aade3b", size = 529777, upload-time = "2026-08-02T13:57:08.527Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b9/31/413a39f707bd54e753c5bf1a55d9663c68cc66628915f7bdb667c9680906/maid_runner-2.24.0-py3-none-any.whl", hash = "sha256:10aedb5151238876e42656ba21565659398005d7cdce242dd7d17da40e1836ad", size = 569739, upload-time = "2026-08-02T13:57:06.837Z" },
 ]
 
 [[package]]
 name = "maid-validator-csharp"
-version = "0.1.0"
+version = "0.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "maid-runner" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
     { name = "tree-sitter" },
     { name = "tree-sitter-c-sharp" },
 ]
@@ -201,7 +164,8 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "maid-runner", editable = "../maid-runner" },
+    { name = "maid-runner", specifier = ">=2.24,<3" },
+    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2" },
     { name = "tree-sitter", specifier = ">=0.25.0" },
     { name = "tree-sitter-c-sharp", specifier = ">=0.23.1" },
 ]

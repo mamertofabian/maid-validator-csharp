@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import pytest
 from tree_sitter import Language, Parser
 import tree_sitter_c_sharp
@@ -16,7 +14,6 @@ from maid_validator_csharp import CSharpValidator
 from maid_validator_csharp._implementation import collect_implementation_artifacts
 from maid_validator_csharp._parse import parse_csharp_source
 
-RUNNER_SIGNATURE_COMMIT = "f251bd5c6530cfe4d9be84b05dc59d488aa8940e"
 PARSER = Parser(Language(tree_sitter_c_sharp.language()))
 
 
@@ -246,10 +243,3 @@ public class OverloadTests
     call_references = _callables(references)
     assert call_references
     assert all(reference.signature is None for reference in call_references)
-
-
-def test_ci_pins_the_runner_exact_signature_contract() -> None:
-    ci = Path(".github/workflows/ci.yml").read_text()
-
-    assert "Check out MAID Runner exact-signature contract" in ci
-    assert f"ref: {RUNNER_SIGNATURE_COMMIT}" in ci
